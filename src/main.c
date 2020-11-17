@@ -4,6 +4,6 @@
 
 int main(int argc, char **argv)
 {
-    printf("Hello World i'm hopity too happy!");
+    printf("Hello World !");
     return (0);
 }
