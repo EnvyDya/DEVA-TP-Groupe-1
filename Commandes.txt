@@ -1,0 +1,5 @@
+Compiler:
+gcc src/main.c -o bin/Prog -I include -L lib -lmingw32 -lSDL2main -lSDL2
+
+Lancer: 
+./bin/Prog.exe 
