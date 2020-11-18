@@ -3,6 +3,6 @@
 #include <SDL.h>
 
 int main(int argc, char **argv){
-    printf("Siegrid jtm !");
+    printf("Bonjour Clement !");
     return (0);
 }
