@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <SDL.h>
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv){
     printf("Hello ZO Warudo !");
     return (0);
 }
