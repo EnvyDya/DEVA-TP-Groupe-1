@@ -9,13 +9,13 @@ void initialiserAlea(unsigned int n)
 }
 
 /* La fonction à appeler pour générer un entier aléatoire situé entre
-*  les constantes MIN et MAX comprises.
+*  les valeurs valMin et valMax comprises.
 */
-int alea()
+int alea(int valMin,int valMax)
 {
     aSrand = 0;
     if(aSrand != 1){
         initialiserAlea((unsigned)time(NULL));
     }
-    return rand()%(MAX - MIN + 1) + MIN;
+    return rand()%(valMax - valMin + 1) + valMin;
 }

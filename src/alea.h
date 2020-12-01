@@ -4,16 +4,16 @@
 #include <stdlib.h>
 #include <time.h>
 
-/* Les constantes MIN et MAX définissent les valeurs extrêmes attribuées à
+/* Les constantes OMIN et OMAX définissent les valeurs extrêmes attribuées à
 *  chaque orientation qu'un joueur peut avoir.
 */
-#define MIN 0
-#define MAX 3
+#define OMIN 0
+#define OMAX 3
 
 int aSrand;
 
 void initialiserAlea(unsigned int n);
 
-int alea();
+int alea(int valMin,int valMax);
 
 #endif
