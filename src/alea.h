@@ -10,9 +10,9 @@
 #define MIN 0
 #define MAX 3
 
-int appelle_srand();
+int aSrand;
 
-void initialiser_aleat(unsigned int n);
+void initialiserAlea(unsigned int n);
 
 int alea();
 

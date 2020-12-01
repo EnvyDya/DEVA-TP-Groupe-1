@@ -1,14 +1,11 @@
 #include "alea.h"
 
-int appelle_srand(){
-    return 0;
-}
+int aSrand = 0;
 
-void initialiser_aleat(unsigned int n)
+void initialiserAlea(unsigned int n)
 {
     srand(n);
-    int a_srand = appelle_srand();
-    a_srand = 1;
+    aSrand = 1;
 }
 
 /* La fonction à appeler pour générer un entier aléatoire situé entre
@@ -16,9 +13,9 @@ void initialiser_aleat(unsigned int n)
 */
 int alea()
 {
-    int a_srand = appelle_srand();
-    if(a_srand != 1){
-        initialiser_aleat((unsigned)time(NULL));
+    aSrand = 0;
+    if(aSrand != 1){
+        initialiserAlea((unsigned)time(NULL));
     }
-    return rand()%(MAX-MIN+1) + MIN;
+    return rand()%(MAX - MIN + 1) + MIN;
 }
