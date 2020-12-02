@@ -4,15 +4,15 @@
 *   Le tableau est de la forme : t[abscisse][ordonnées].
 *   Il est par défaut rempli de vide, mur extérieurs créés.
 *   Les deux joueurs sont placés en bas à gauche et en haut à droite.
-*   Celui en haut à gauche regarde en bas.
-*   Celui en bas à droite regarde en haut.
+*   Celui en haut à droite regarde en bas.
+*   Celui en bas à gauche regarde en haut.
 */
 
-void creaTab(Case t[SIZE][SIZE]){
+void initTab(Case t[SIZE][SIZE]){
     //On met toutes les cases "vides"
     for(int i = 0; i<SIZE; i++){
         for(int j = 0; j<SIZE; j++){
-            t[i][j].joueur = NULL;
+            t[i][j].joueurPresent = 0;
             t[i][j].murEst = false;
             t[i][j].murNord = false;
             t[i][j].murOuest = false;
@@ -38,7 +38,9 @@ void creaTab(Case t[SIZE][SIZE]){
 
     //Placement des joueurs sur la carte
     t[0][SIZE-1].joueur = j1;
+    t[0][SIZE-1].joueurPresent = true;
     t[SIZE-1][0].joueur = j2;
+    t[SIZE-1][0].joueurPresent = true;
 };
 
 
@@ -49,4 +51,54 @@ void creaTab(Case t[SIZE][SIZE]){
 */
 void tourne(Joueur *j, int dir){
     j->orientation = (j->orientation+dir)%4;
+}
+
+/*
+*   Fonction qui affiche le terrain de jeu dans la console.
+*   Affiche les joueurs par un ^ < > v (selon l'orientation), et les murs par --- ou |
+*/
+void afficheGrid(Case t[SIZE][SIZE]){
+    //On affiche le mur du haut (x3 par case pour éventuel mur gauche, joueur, mur droit)
+    for(int i = 0; i<SIZE; i++){
+        printf("---");
+    }
+    printf("\n");
+    for(int i = 0; i<SIZE; i++){
+        //Pour chaque case on teste s'il y a un mur/un joueur ou non, si rien on affiche un espace
+        for(int j = 0; j<SIZE; j++){
+            if(t[j][i].murOuest){
+                printf("|");
+            }else{
+                printf(" ");
+            }
+            if(t[j][i].joueurPresent){
+                if(t[j][i].joueur.orientation == 0){
+                    printf("^");
+                }else if(t[j][i].joueur.orientation == 1){
+                    printf(">");
+                }else if(t[j][i].joueur.orientation == 2){
+                    printf("v");
+                }else if(t[j][i].joueur.orientation == 3){
+                    printf("<");
+                }
+            }else{
+                printf(" ");
+            }
+            if(t[j][i].murEst){
+                printf("|");
+            }else{
+                printf(" ");
+            }
+        }
+        printf("\n");
+        //Même chose pour les murs sud
+        for(int j = 0; j<SIZE; j++){
+            if(t[j][i].murSud == true){
+                printf("---");
+            }else{
+                printf("   ");
+            }
+        }
+        printf("\n");
+    }
 }
