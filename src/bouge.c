@@ -4,8 +4,8 @@
 *   Le tableau est de la forme : t[abscisse][ordonnées].
 *   Il est par défaut rempli de vide, mur extérieurs créés.
 *   Les deux joueurs sont placés en bas à gauche et en haut à droite.
-*   Celui en haut à gauche regarde en bas.
-*   Celui en bas à droite regarde en haut.
+*   Celui en haut à droite regarde en bas.
+*   Celui en bas à gauche regarde en haut.
 */
 
 void initTab(Case t[SIZE][SIZE]){
@@ -53,6 +53,10 @@ void tourne(Joueur *j, int dir){
     j->orientation = (j->orientation+dir)%4;
 }
 
+/*
+*   Fonction qui affiche le terrain de jeu dans la console.
+*   Affiche les joueurs par un ^ < > v (selon l'orientation), et les murs par --- ou |
+*/
 void afficheGrid(Case t[SIZE][SIZE]){
     //On affiche le mur du haut (x3 par case pour éventuel mur gauche, joueur, mur droit)
     for(int i = 0; i<SIZE; i++){
@@ -68,7 +72,15 @@ void afficheGrid(Case t[SIZE][SIZE]){
                 printf(" ");
             }
             if(t[j][i].joueurPresent){
-                printf("o");
+                if(t[j][i].joueur.orientation == 0){
+                    printf("^");
+                }else if(t[j][i].joueur.orientation == 1){
+                    printf(">");
+                }else if(t[j][i].joueur.orientation == 2){
+                    printf("v");
+                }else if(t[j][i].joueur.orientation == 3){
+                    printf("<");
+                }
             }else{
                 printf(" ");
             }
@@ -83,6 +95,8 @@ void afficheGrid(Case t[SIZE][SIZE]){
         for(int j = 0; j<SIZE; j++){
             if(t[j][i].murSud == true){
                 printf("---");
+            }else{
+                printf("   ");
             }
         }
         printf("\n");
