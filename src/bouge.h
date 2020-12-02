@@ -14,8 +14,8 @@
 *   Orientation Sud : 2
 *   Orientation Ouest : 3
 *
-*   Il possède aussi un id, permettant de le repérer (Joueur 1 et Joueur 2 ou Ordi)
-*   Le joueur 1 a pour id 1 et le joueur 2 a pour id 2
+*   Il possède aussi un id, permettant de le repérer (Joueur 1 et Joueur 2 ou Ordi).
+*   Le joueur 1 a pour id 1 et le joueur 2 a pour id 2.
 */
 typedef struct{
     int orientation;
@@ -41,10 +41,12 @@ typedef struct{
     //Capacite capacite;
 }Case;
 
-void initTab(Case t[SIZE][SIZE]); //Fonction qui initialise le tableau en début de partie
+void initTab(Case t[SIZE][SIZE]); //Fonction qui initialise le tableau en début de partie.
 
-void tourne(Joueur *j, int dir); //Fonction qui fait tourner un joueur
+void tourne(int id, int dir, Case t[SIZE][SIZE]); //Fonction qui fait tourner un joueur.
 
-void afficheGrid(Case t[SIZE][SIZE]); //Fonction qui affiche le tableau, avec ses murs et ses joueurs
+void afficheGrid(Case t[SIZE][SIZE]); //Fonction qui affiche le tableau, avec ses murs et ses joueurs.
+
+bool avance(int j, Case t[SIZE][SIZE]); //Fonction qui fait avancer le joueur (repéré par son id dans j).
 
 #endif
