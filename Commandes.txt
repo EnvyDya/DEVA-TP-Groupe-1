@@ -6,3 +6,6 @@ Lancer:
 
 Lancer makeFile:
 mingw32-make -f ./MakeFile.mk all
+
+Supprimer tous les fichiers de construction: 
+mingw32-make -f ./MakeFile.mk clear
