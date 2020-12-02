@@ -1,4 +1,4 @@
-BIN=bin/Prog.exe
+BIN=bin/TachiAi.exe
 OBJECTS=src/main.o src/bouge.o
 CC=gcc
 CFLAGS=-I include -L lib -lmingw32 -lSDL2main -lSDL2
@@ -13,4 +13,4 @@ bouge.o: bouge.c
 	$(CC) -c src/bouge.c $(CFLAGS)
 
 clear:
-	del *.o *.exe
+	del bin\*.exe src\*.o
