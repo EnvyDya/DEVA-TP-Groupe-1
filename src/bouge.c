@@ -113,6 +113,7 @@ void afficheGrid(Case t[SIZE][SIZE]){
         }
         printf("\n");
     }
+    printf("\n");
 }
 
 /*

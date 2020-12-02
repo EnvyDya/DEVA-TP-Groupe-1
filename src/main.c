@@ -6,15 +6,19 @@ int main(int argc, char **argv){
     initTab(t);
     afficheGrid(t);
     avance(1, t);
+    afficheGrid(t);
     avance(1, t);
+    afficheGrid(t);
     avance(1, t);
+    afficheGrid(t);
     tourne(2, -1, t);
+    afficheGrid(t);
     avance(2, t);
+    afficheGrid(t);
     if(!avance(2, t)){
-        printf("Mouvement impossible, il y a un mur.");
+        printf("Mouvement impossible, il y a un mur.\n");
     }
     tourne(1, -1, t);
-    printf("\n");
     afficheGrid(t);
     return (0);
 }

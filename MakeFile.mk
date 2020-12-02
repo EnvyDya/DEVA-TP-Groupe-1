@@ -19,3 +19,6 @@ alea.o: alea.c
 	$(CC) -c src/alea.c $(CFLAGS)
 clear:
 	del bin\*.exe src\*.o
+
+clearO:
+	del src\*.o
