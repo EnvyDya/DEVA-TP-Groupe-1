@@ -1,5 +1,5 @@
 BIN=bin/Prog.exe
-OBJECTS=src/main.o
+OBJECTS=src/main.o src/bouge.o
 CC=gcc
 CFLAGS=-I include -L lib -lmingw32 -lSDL2main -lSDL2
 
@@ -8,6 +8,9 @@ all: $(OBJECTS)
 
 main.o: main.c
 	$(CC) -c src/main.c $(CFLAGS)
+
+bouge.o: bouge.c
+	$(CC) -c src/bouge.c $(CFLAGS)
 
 clear:
 	del *.o *.exe

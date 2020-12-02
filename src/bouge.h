@@ -8,23 +8,6 @@
 #define SIZE 6
 
 /*
-*   Une case de tableau a une présence ou non de murs.
-*   Ces murs peuvent empêcher le déplacement du joueur (pour le retenir dans la carte ou le gêner).
-*   La case peut aussi contenir un joueur. 
-*   C'est dans ces cases que les tests de victoire seront fait.
-*   Enfin la case peut contenir une capacité à ramasser.
-*/
-typedef struct{
-    bool murEst;
-    bool murNord;
-    bool murSud;
-    bool murOuest;
-
-    Joueur joueur;
-    //Capacite capacite;
-}Case;
-
-/*
 *   Un joueur possède une orientation.
 *   Orientation Nord : 0
 *   Orientation Est : 1
@@ -40,8 +23,28 @@ typedef struct{
     //Capacite *capacite;
 }Joueur;
 
-void creaTab(Case tab[SIZE][SIZE]); //Fonction qui initialise le tableau en début de partie
+/*
+*   Une case de tableau a une présence ou non de murs.
+*   Ces murs peuvent empêcher le déplacement du joueur (pour le retenir dans la carte ou le gêner).
+*   La case peut aussi contenir un joueur. Un booléen y est associé pour savoir si un joueur est dedans.
+*   C'est dans ces cases que les tests de victoire seront fait.
+*   Enfin la case peut contenir une capacité à ramasser.
+*/
+typedef struct{
+    bool murEst;
+    bool murNord;
+    bool murSud;
+    bool murOuest;
+
+    bool joueurPresent;
+    Joueur joueur;
+    //Capacite capacite;
+}Case;
+
+void initTab(Case t[SIZE][SIZE]); //Fonction qui initialise le tableau en début de partie
 
 void tourne(Joueur *j, int dir); //Fonction qui fait tourner un joueur
+
+void afficheGrid(Case t[SIZE][SIZE]); //Fonction qui affiche le tableau, avec ses murs et ses joueurs
 
 #endif
