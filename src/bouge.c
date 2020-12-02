@@ -12,7 +12,7 @@ void initTab(Case t[SIZE][SIZE]){
     //On met toutes les cases "vides"
     for(int i = 0; i<SIZE; i++){
         for(int j = 0; j<SIZE; j++){
-            t[i][j].joueurPresent = 0;
+            t[i][j].joueurPresent = false;
             t[i][j].murEst = false;
             t[i][j].murNord = false;
             t[i][j].murOuest = false;
@@ -46,11 +46,23 @@ void initTab(Case t[SIZE][SIZE]){
 
 /*
 *   Fonction qui fait pivoter le joueur
-*   On rentre un pointeur sur joueur ainsi qu'une direction.
+*   On rentre un entier qui correspond à l'id du joueur.
 *   La direction peut être à -1 (pour tourner à gauche) ou à 1 (pour tourner à droite).
+*   Le tableau t correspond à la grille de jeu
 */
-void tourne(Joueur *j, int dir){
-    j->orientation = (j->orientation+dir)%4;
+void tourne(int id, int dir, Case t[SIZE][SIZE]){
+    //On recherche la position du joueur j.
+    for(int i = 0; i<SIZE; i++){
+        for(int j = 0; j<SIZE; j++){
+            if(t[j][i].joueurPresent){
+                if(t[j][i].joueur.id == id){
+                    //On modifie son orientation quand on l'a trouvé
+                    t[j][i].joueur.orientation = (unsigned)(t[j][i].joueur.orientation+dir)%4;
+                    break;
+                }
+            }
+        }
+    }
 }
 
 /*
@@ -100,5 +112,81 @@ void afficheGrid(Case t[SIZE][SIZE]){
             }
         }
         printf("\n");
+    }
+}
+
+/*
+*   Fonction qui permet de faire avancer un joueur sur le tableau.
+*   id permet de stocker l'identifiant du joueur qui bouge.
+*   La fonction retourne true si l'action a pu s'executer, false sinon.
+*   Le false permettra au joueur (s'étant peut être trompé) de ne pas perdre son tour.
+*/
+
+bool avance(int id, Case t[SIZE][SIZE]){
+    //On crée un posX et posY permettant de stocker l'emplacement du joueur
+    int posX = 0, posY = 0;
+    Joueur p;
+
+    //On recherche la position du joueur j et on le sauvegarde (orientation, et id).
+    for(int i = 0; i<SIZE; i++){
+        for(int j = 0; j<SIZE; j++){
+            if(t[j][i].joueurPresent){
+                if(t[j][i].joueur.id == id){
+                    posX = j;
+                    posY = i;
+                    p = t[j][i].joueur;
+                    break;
+                }
+            }
+        }
+    }
+
+    //On regarde l'orientation du joueur pour agir en conséquence    
+    switch (p.orientation)
+    {
+    case 0:
+        //Dans chaque cas, on vérifie qu'un mur n'empêche pas l'action
+        if(!t[posX][posY].murNord){
+            t[posX][posY-1].joueur = p;
+            t[posX][posY-1].joueurPresent = true;
+            t[posX][posY].joueurPresent = false;
+            return true;
+        }else{
+            //Si un mur bloque l'action, on renvoie false et on ne fait pas bouger le joueur.
+            return false;
+        }
+        break;
+    
+    case 1:
+        if(!t[posX][posY].murEst){
+            t[posX+1][posY].joueur = p;
+            t[posX+1][posY].joueurPresent = true;
+            t[posX][posY].joueurPresent = false;
+            return true;
+        }else{
+            return false;
+        }
+        break;
+
+    case 2:
+        if(!t[posX][posY].murSud){
+            t[posX][posY+1].joueur = p;
+            t[posX][posY+1].joueurPresent = true;
+            t[posX][posY].joueurPresent = false;
+            return true;
+        }else{
+            return false;
+        }
+        break;
+    case 3:
+        if(!t[posX][posY].murOuest){
+            t[posX-1][posY].joueur = p;
+            t[posX-1][posY].joueurPresent = true;
+            t[posX][posY].joueurPresent = false;
+            return true;
+        }else{
+            return false;
+        }
+        break;
     }
 }
