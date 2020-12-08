@@ -18,8 +18,8 @@ int main(int argc, char **argv){
     afficheGrid(t);
     return (0);
 }
-//Work in progress
-#if 0 
+
+#if 0
 #include "affichage.h"
 
 int main(int argc, char **argv){
