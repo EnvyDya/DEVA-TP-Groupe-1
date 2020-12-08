@@ -5,8 +5,8 @@
 #include <stdlib.h>
 #include <SDL.h>
 
-#define L=1280
-#define h=720
+#define Largeur 1280
+#define Hauteur 720
 
     void SDL_ExitError(char *messageerreur);
     

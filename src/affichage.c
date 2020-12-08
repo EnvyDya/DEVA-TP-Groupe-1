@@ -65,6 +65,13 @@ void SDL_Menu(){
         SDL_ExitErrorWindowRender("Erreur pendant le chargement de la texture", fenetre, rendu);
     }
 
-    rectangleMenu.x = (L - rectangleMenu.w)/2;
-    rectangleMenu.y = (h - recangleMenu.h)/2;
+    rectangleMenu.x = (Largeur - rectangleMenu.w)/2;
+    rectangleMenu.y = (Hauteur - recangleMenu.h)/2;
+    
+    //Affichage de l'image du menu
+    if(SDL_RenderCopy(rendu, textureMenu, NULL, &rectangleMenu)!=0){
+        SDL_ExitErrorWindowRender("Erreur lors de l'affichage des textures", fenetre, rendu);
+    }
+    //Rendu :
+    SDL_RenderPresent(rendu);
 }
