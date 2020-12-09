@@ -8,6 +8,24 @@
 #define SIZE 6
 
 /*
+*   Définition du type capacite, il possède un entier qui détermine le type de capacité.
+*   (0 pour un mur, 1 pour reculer l'adversaire, 2 pour faire demi-tour, 3 pour rejouer un tour).
+*/
+typedef struct capacite capacite;
+
+struct capacite{
+    int type;
+    capacite *s;
+};
+
+/*
+*   Liste chaînée de capacités, pointe sur la dernière capacité ramassée.
+*/
+typedef struct Liste_Capacites{
+    capacite *p;
+}Liste_Capacites;
+
+/*
 *   Un joueur possède une orientation.
 *   Orientation Nord : 0
 *   Orientation Est : 1
@@ -20,7 +38,7 @@
 typedef struct{
     int orientation;
     short int id;
-    //Capacite *capacite;
+    Liste_Capacites capacite;
 }Joueur;
 
 /*
@@ -38,10 +56,12 @@ typedef struct{
 
     bool joueurPresent;
     Joueur joueur;
-    //Capacite capacite;
+    capacite *capa;
 }Case;
 
 void initTab(Case t[SIZE][SIZE]); //Fonction qui initialise le tableau en début de partie.
+
+Liste_Capacites creaListe(); //Fonction qui crée une liste de pouvoirs au début de la partie.
 
 void tourne(int id, int dir, Case t[SIZE][SIZE]); //Fonction qui fait tourner un joueur.
 
