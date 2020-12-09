@@ -8,7 +8,7 @@
 *   Celui en bas à gauche regarde en haut.
 */
 
-void initTab(Case t[SIZE][SIZE]){
+void initTab(){
     //On met toutes les cases "vides"
     for(int i = 0; i<SIZE; i++){
         for(int j = 0; j<SIZE; j++){
@@ -47,6 +47,9 @@ void initTab(Case t[SIZE][SIZE]){
     t[SIZE-1][0].joueurPresent = true;
 };
 
+/*
+*   Fonction qui permet de renvoyer une liste de capacité pleine en début de partie.
+*/
 Liste_Capacites creaListe(){
     Liste_Capacites l;
     capacite *b1 = (capacite *)malloc(sizeof(capacite));
@@ -71,7 +74,7 @@ Liste_Capacites creaListe(){
 *   La direction peut être à -1 (pour tourner à gauche) ou à 1 (pour tourner à droite).
 *   Le tableau t correspond à la grille de jeu
 */
-void tourne(int id, int dir, Case t[SIZE][SIZE]){
+void tourne(int id, int dir){
     //On recherche la position du joueur j.
     for(int i = 0; i<SIZE; i++){
         for(int j = 0; j<SIZE; j++){
@@ -90,13 +93,15 @@ void tourne(int id, int dir, Case t[SIZE][SIZE]){
 *   Fonction qui affiche le terrain de jeu dans la console.
 *   Affiche les joueurs par un ^ < > v (selon l'orientation), et les murs par --- ou |
 */
-void afficheGrid(Case t[SIZE][SIZE]){
+void afficheGrid(){
     //On affiche le mur du haut (x3 par case pour éventuel mur gauche, joueur, mur droit)
+    printf(" ");
     for(int i = 0; i<SIZE; i++){
-        printf("---");
+        printf("-%c-", 'a'+i);
     }
     printf("\n");
     for(int i = 0; i<SIZE; i++){
+        printf("%d", i);
         //Pour chaque case on teste s'il y a un mur/un joueur ou non, si rien on affiche un espace
         for(int j = 0; j<SIZE; j++){
             if(t[j][i].murOuest){
@@ -125,6 +130,9 @@ void afficheGrid(Case t[SIZE][SIZE]){
         }
         printf("\n");
         //Même chose pour les murs sud
+        if(i == SIZE-1){
+            printf(" ");
+        }
         for(int j = 0; j<SIZE; j++){
             if(t[j][i].murSud == true){
                 printf("---");
@@ -144,7 +152,7 @@ void afficheGrid(Case t[SIZE][SIZE]){
 *   Le false permettra au joueur (s'étant peut être trompé) de ne pas perdre son tour.
 */
 
-bool avance(int id, Case t[SIZE][SIZE]){
+bool avance(int id){
     //On crée un posX et posY permettant de stocker l'emplacement du joueur
     int posX = 0, posY = 0;
     Joueur p;
@@ -208,6 +216,112 @@ bool avance(int id, Case t[SIZE][SIZE]){
         }else{
             return false;
         }
+        break;
+    }
+}
+
+void useCapa(int id, int n){
+    bool possible = false;
+    switch (n)
+    {
+    case 0:
+        /* Création Mur */
+        break;
+    
+    case 1:
+        /* Recule adversaire */
+        for(int i = 0; i<SIZE; i++){
+            for(int j = 0; j<SIZE; j++){
+                if(t[j][i].joueurPresent){
+                    if(t[j][i].joueur.id == id){
+                        capacite *c = (capacite *)malloc(sizeof(capacite));
+                        c = t[j][i].joueur.capacite.p;
+                        capacite *prec = (capacite *)malloc(sizeof(capacite));
+                        prec = t[j][i].joueur.capacite.p;
+                        //Si le joueur a la capacité, on notifie que l'action est possible et on supprime la capacité de l'inventaire
+                        while(c->s != NULL){
+                            if(c->type == n){
+                                possible = true;
+                                prec->s = c->s;
+                                free(c);
+                                break;
+                            }
+                            prec = c;
+                            c = c->s;
+                        }
+                    }
+                }
+            }
+        }
+        if(possible){
+            for(int i = 0; i<SIZE; i++){
+                for(int j = 0; j<SIZE; j++){
+                    if(t[j][i].joueurPresent){
+                        //Si le joueur présent est j+1 ou j-1 (l'autre joueur) on fait l'action
+                        if(t[j][i].joueur.id == id+1 || t[j][i].joueur.id == id-1){
+                            if(t[j][i].joueur.id == id+1){
+                                tourne(id+1, -1);
+                                tourne(id+1, -1);
+                                avance(id+1);
+                                tourne(id+1, -1);
+                                tourne(id+1, -1);
+                                break;
+                            }else{
+                                tourne(id-1, -1);
+                                tourne(id-1, -1);
+                                avance(id-1);
+                                tourne(id-1, -1);
+                                tourne(id-1, -1);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }else{
+            printf("Mouvement impossible\n");
+        }
+        break;
+        
+    case 2:
+        /* Demi-tour */
+        //On cherche le joueur dans le tableau
+        for(int i = 0; i<SIZE; i++){
+            for(int j = 0; j<SIZE; j++){
+                if(t[j][i].joueurPresent){
+                    if(t[j][i].joueur.id == id){
+                        capacite *c = (capacite *)malloc(sizeof(capacite));
+                        c = t[j][i].joueur.capacite.p;
+                        capacite *prec = (capacite *)malloc(sizeof(capacite));
+                        prec = t[j][i].joueur.capacite.p;
+                        //On parcourt les capacités jusqu'au bout
+                        while(c->s != NULL){
+                            //Si le joueur a la capacité, on execute l'action
+                            if(c->type == n){
+                                tourne(id, 1);
+                                tourne(id, 1);
+                                possible = true;
+                                prec->s = c->s;
+                                free(c);
+                                break;
+                            }
+                            prec = c;
+                            c = c->s;
+                        }
+                    }
+                }
+            }
+        }
+        if(!possible){
+            printf("Mouvement impossible\n");
+        }
+        break;
+
+    case 3:
+        /* Nouveau tour */
+        break;
+            
+    default:
         break;
     }
 }

@@ -2,7 +2,6 @@
 #include "affichage.h"
 #include <SDL.h>
 
-
 int main(int argc, char **argv){
     SDL_Surface *ecran = NULL;
     SDL_Surface *menu = NULL;
