@@ -17,6 +17,7 @@ void initTab(Case t[SIZE][SIZE]){
             t[i][j].murNord = false;
             t[i][j].murOuest = false;
             t[i][j].murSud = false;
+            t[i][j].capa = NULL;
         }
     }
     //On met les cases extérieures avec leurs murs
@@ -31,10 +32,13 @@ void initTab(Case t[SIZE][SIZE]){
     Joueur j1;
     j1.id = 1;
     j1.orientation = 0;
+    //Création de la liste de capacités du joueur 1
+    j1.capacite = creaListe();
 
     Joueur j2;
     j2.id = 2;
     j2.orientation = 2;
+    j2.capacite = creaListe();
 
     //Placement des joueurs sur la carte
     t[0][SIZE-1].joueur = j1;
@@ -43,6 +47,23 @@ void initTab(Case t[SIZE][SIZE]){
     t[SIZE-1][0].joueurPresent = true;
 };
 
+Liste_Capacites creaListe(){
+    Liste_Capacites l;
+    capacite *b1 = (capacite *)malloc(sizeof(capacite));
+    b1->type = 0;
+    b1->s = NULL;
+    capacite *b2 = (capacite *)malloc(sizeof(capacite));
+    b2->type = 1;
+    b2->s = b1;
+    capacite *b3 = (capacite *)malloc(sizeof(capacite));
+    b3->type = 2;
+    b3->s = b2;
+    capacite *b4 = (capacite *)malloc(sizeof(capacite));
+    b4->type = 3;
+    b4->s = b3;
+    l.p = b4;
+    return l;
+}
 
 /*
 *   Fonction qui fait pivoter le joueur
@@ -126,7 +147,6 @@ bool avance(int id, Case t[SIZE][SIZE]){
     //On crée un posX et posY permettant de stocker l'emplacement du joueur
     int posX = 0, posY = 0;
     Joueur p;
-
     //On recherche la position du joueur j et on le sauvegarde (orientation, et id).
     for(int i = 0; i<SIZE; i++){
         for(int j = 0; j<SIZE; j++){
@@ -140,7 +160,7 @@ bool avance(int id, Case t[SIZE][SIZE]){
             }
         }
     }
-
+    
     //On regarde l'orientation du joueur pour agir en conséquence    
     switch (p.orientation)
     {

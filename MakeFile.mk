@@ -14,3 +14,6 @@ bouge.o: bouge.c
 
 clear:
 	del bin\*.exe src\*.o
+
+clearO:
+	del src\*.o
