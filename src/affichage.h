@@ -10,4 +10,9 @@
 
     void SDL_ExitError(char *messageerreur);
 
+    void SDL_ExitError(char *messageerreur);
+    
+    void SDL_ExitErrorWindowRender(char* messageerreur, SDL_Window *fenetre, SDL_Renderer *rendu);
+
+    void SDL_Menu();
 #endif
