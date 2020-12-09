@@ -2,10 +2,10 @@ Compiler:
 gcc src/main.c -o bin/Prog -I include -L lib -lmingw32 -lSDL2main -lSDL2
 
 Lancer: 
-./bin/Prog.exe
+./bin/TachiAi.exe
 
-Lancer makeFile:
-mingw32-make -f ./MakeFile.mk all
+Utilisation MakeFile:
 
-Supprimer tous les fichiers de construction: 
-mingw32-make -f ./MakeFile.mk clear
+    Compiler + faire le exe : mingw32-make -f ./MakeFile.mk all
+    Retirer les .exe et les .o : mingw32-make -f ./MakeFile.mk clear
+    Retirer les .o : mingw32-make -f ./MakeFile.mk clearO
