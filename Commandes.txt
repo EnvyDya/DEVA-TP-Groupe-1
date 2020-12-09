@@ -3,3 +3,9 @@ gcc src/main.c -o bin/Prog -I include -L lib -lmingw32 -lSDL2main -lSDL2
 
 Lancer: 
 ./bin/Prog.exe 
+
+Utilisation MakeFile:
+
+    Compiler + faire le exe : mingw32-make -f ./MakeFile.mk all
+    Retirer les .exe et les .o : mingw32-make -f ./MakeFile.mk clear
+    Retirer les .o : mingw32-make -f ./MakeFile.mk clearO
