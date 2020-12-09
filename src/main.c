@@ -51,7 +51,7 @@ int main(int argc, char **argv){
         }
     SDL_BlitSurface(menu,NULL,ecran,&positionMenu);
     //Afin de rafraichir l'écran
-    SDL_flip(ecran);
+    SDL_Flip(ecran);
 
 
     }
