@@ -2,24 +2,28 @@
 #include <SDL.h>
 
 int main(int argc, char **argv){
-    Case t[SIZE][SIZE];
-    initTab(t);
-    afficheGrid(t);
-    avance(1, t);
-    afficheGrid(t);
-    avance(1, t);
-    afficheGrid(t);
-    avance(1, t);
-    afficheGrid(t);
-    tourne(2, -1, t);
-    afficheGrid(t);
-    avance(2, t);
-    afficheGrid(t);
-    if(!avance(2, t)){
+    initTab();
+    afficheGrid();
+    avance(1);
+    afficheGrid();
+    avance(1);
+    afficheGrid();
+    avance(1);
+    afficheGrid();
+    tourne(2, -1);
+    afficheGrid();
+    avance(2);
+    afficheGrid();
+    if(!avance(2)){
         printf("Mouvement impossible, il y a un mur.\n");
     }
-    tourne(1, -1, t);
-    afficheGrid(t);
+    tourne(1, -1);
+    afficheGrid();
+    useCapa(1, 1);
+    afficheGrid();
+    useCapa(2, 1);
+    afficheGrid();
+    useCapa(2, 1);
     return (0);
 }
 //Work in progress

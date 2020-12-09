@@ -59,15 +59,17 @@ typedef struct{
     capacite *capa;
 }Case;
 
-void initTab(Case t[SIZE][SIZE]); //Fonction qui initialise le tableau en début de partie.
+Case t[SIZE][SIZE];
+
+void initTab(); //Fonction qui initialise le tableau en début de partie.
 
 Liste_Capacites creaListe(); //Fonction qui crée une liste de pouvoirs au début de la partie.
 
-void tourne(int id, int dir, Case t[SIZE][SIZE]); //Fonction qui fait tourner un joueur.
+void tourne(int id, int dir); //Fonction qui fait tourner un joueur.
 
-void afficheGrid(Case t[SIZE][SIZE]); //Fonction qui affiche le tableau, avec ses murs et ses joueurs.
+void afficheGrid(); //Fonction qui affiche le tableau, avec ses murs et ses joueurs.
 
-bool avance(int j, Case t[SIZE][SIZE]); //Fonction qui fait avancer le joueur (repéré par son id dans j).
+bool avance(int j); //Fonction qui fait avancer le joueur (repéré par son id dans j).
 
-void useCapa(Joueur j, int n); //Fonction qui permet au joueur d'utiliser une capacité n (n entré au clavier).
+void useCapa(int id, int n); //Fonction qui permet au joueur (repéré par son id) d'utiliser une capacité n (n entré au clavier).
 #endif
