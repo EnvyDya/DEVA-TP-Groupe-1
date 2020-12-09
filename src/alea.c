@@ -1,42 +1,20 @@
 #include "alea.h"
 
-int aSrand = 0;
+/*
+ *  La fonction prend en paramètre les bornes de l'intervalle dans lequel on veut générer un nombre aléatoire.
+ *  On fait appel à la fonction srand en plaçant time(NULL) en paramètre afin de modifier la "graine" à chaque appel de la fonction alea.
+ *  On stocke ensuite MAX_TAB_ALEA nombres générés pseudo-aléatoirement dans un tableau d'entiers statique.
+ *  On affecte à la variable randInt le reste de la division entière d'un nombre généré avec rand() et MAX_TAB_ALEA
+ *  On retourne ensuite l'entier stocké de la case du tableau d'indice randInt.
+ */
+int alea(int borneMin,int borneMax){
+    int tempAlea,randInt,tabAlea[MAX_TAB_ALEA];
 
-/*  La fonction définit un srand avec la valeur passée en paramètre
-*   et indique que cela a été fait en affectant "1" à la variable aSrand.
-*/
-void initialiserAlea(unsigned int n)
-{
-    srand(n);
-    aSrand = 1;
-}
-
-/*  La fonction à appeler pour générer un entier aléatoire situé entre
-*   les valeurs valMin et valMax comprises si aSrand est égal à 1 indiquant
-*   que la fonction srand a été appellée.
-*/
-int alea(int valMin,int valMax)
-{
-    aSrand = 0;
-    if(aSrand != 1){
-        initialiserAlea((unsigned)time(NULL));
+    srand((unsigned int)time(NULL));
+    for(int i;i<MAX_TAB_ALEA;i++){
+        tempAlea = rand()%(1 + (borneMax - borneMin));
+        tabAlea[i] = tempAlea;
     }
-    return rand()%(valMax - valMin + 1) + valMin;
-}
-
-
-//Tentatives
-int rand_()
-{
-    int r = alea(OMIN,OMAX);
-    return r;
-}
-
-int randRange(int n)
-{
-    int limit,r;
-
-    limit = RAND_MAX - (RAND_MAX % n);
-    while((r = rand() >= limit));
-    return r % n;
+    randInt = rand()%MAX_TAB_ALEA;
+    return tabAlea[randInt];
 }
