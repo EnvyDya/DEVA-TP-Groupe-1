@@ -28,7 +28,7 @@ int alea(int valMin,int valMax)
 //Tentatives
 int rand_()
 {
-    int r = alea(OMIN,OMAX,(unsigned int)time(NULL));
+    int r = alea(OMIN,OMAX);
     return r;
 }
 

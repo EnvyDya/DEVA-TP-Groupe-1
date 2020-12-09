@@ -61,12 +61,12 @@ void SDL_Menu(){
     SDL_Rect rectangleMenu;
 
     //Je charge l'image dans la mémoire
-    if(SDL_QueryTexture(textureMenu, NULL, NULL, &rectangleMenu.w, &rectangleMenu.h)!=0){
+    if(SDL_QueryTexture(textureMenu, NULL, NULL, &rectangleMenu.w,&rectangleMenu.h)!=0){
         SDL_ExitErrorWindowRender("Erreur pendant le chargement de la texture", fenetre, rendu);
     }
 
     rectangleMenu.x = (Largeur - rectangleMenu.w)/2;
-    rectangleMenu.y = (Hauteur - recangleMenu.h)/2;
+    rectangleMenu.y = (Hauteur - rectangleMenu.h)/2;
     
     //Affichage de l'image du menu
     if(SDL_RenderCopy(rendu, textureMenu, NULL, &rectangleMenu)!=0){
