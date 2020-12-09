@@ -69,4 +69,5 @@ void afficheGrid(Case t[SIZE][SIZE]); //Fonction qui affiche le tableau, avec se
 
 bool avance(int j, Case t[SIZE][SIZE]); //Fonction qui fait avancer le joueur (repéré par son id dans j).
 
+void useCapa(Joueur j, int n); //Fonction qui permet au joueur d'utiliser une capacité n (n entré au clavier).
 #endif

@@ -47,6 +47,9 @@ void initTab(Case t[SIZE][SIZE]){
     t[SIZE-1][0].joueurPresent = true;
 };
 
+/*
+*   Fonction qui permet de renvoyer une liste de capacité pleine en début de partie.
+*/
 Liste_Capacites creaListe(){
     Liste_Capacites l;
     capacite *b1 = (capacite *)malloc(sizeof(capacite));
@@ -208,6 +211,30 @@ bool avance(int id, Case t[SIZE][SIZE]){
         }else{
             return false;
         }
+        break;
+    }
+}
+
+void useCapa(Joueur j, int n){
+    switch (n)
+    {
+    case 0:
+        /* Création Mur */
+        break;
+    
+    case 1:
+        /* Recule adversaire */
+        break;
+        
+    case 2:
+        /* Demi-tour */
+        break;
+
+    case 3:
+        /* Nouveau tour */
+        break;
+            
+    default:
         break;
     }
 }
