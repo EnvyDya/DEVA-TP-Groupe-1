@@ -9,3 +9,7 @@ Utilisation MakeFile:
     Compiler + faire le exe : mingw32-make -f ./MakeFile.mk all
     Retirer les .exe et les .o : mingw32-make -f ./MakeFile.mk clear
     Retirer les .o : mingw32-make -f ./MakeFile.mk clearO
+
+Utilisation GitHub:
+
+    Pour remettre une version récente de notre master dans une branche : git merge master
