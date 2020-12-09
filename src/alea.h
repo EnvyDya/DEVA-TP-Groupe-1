@@ -4,20 +4,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-/*  Les constantes OMIN et OMAX définissent les valeurs extrêmes attribuées à
-*   chaque orientation qu'un joueur peut avoir.
-*/
-#define OMIN 0
-#define OMAX 3
+#define MAX_TAB_ALEA 10
 
-int aSrand;
-
-void initialiserAlea(unsigned int n);
-
-int alea(int valMin,int valMax);
-
-int rand_();
-
-int randRange(int n);
+int alea(int borneMin,int borneMax);
 
 #endif
