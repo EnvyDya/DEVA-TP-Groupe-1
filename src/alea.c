@@ -22,6 +22,7 @@ int alea(int borneMin,int borneMax){
 //Tentative
 int pondAlea(int items[],int pourcentage[])
 {
+    #if 0
     int somme;
     for(int i=0;i<sizeof(pourcentage);i++){
         somme += pourcentage[i];
@@ -31,5 +32,16 @@ int pondAlea(int items[],int pourcentage[])
         if(pond<=(100+pourcentage[i])%100 && pond>=(100-pourcentage[i])%100){
             return items[i];
         }
+    }
+    #endif
+    int pond = alea(1,100);
+    if(pond>=1 && pond<=25){
+        return items[0];
+    } else if(pond>=26 && pond<=50) {
+        return items[1];
+    } else if (pond>=51 && pond<=75){
+        return items[2];
+    } else if (pond>=76 && pond<=100){
+        return items[3];
     }
 }
