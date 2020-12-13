@@ -18,3 +18,18 @@ int alea(int borneMin,int borneMax){
     randInt = rand()%MAX_TAB_ALEA;
     return tabAlea[randInt];
 }
+
+//Tentative
+int pondAlea(int items[],int pourcentage[])
+{
+    int somme;
+    for(int i=0;i<sizeof(pourcentage);i++){
+        somme += pourcentage[i];
+    }
+    int pond = alea(1,somme);
+    for(int i=1;i<sizeof(pourcentage);i++){
+        if(pond<=(100+pourcentage[i])%100 && pond>=(100-pourcentage[i])%100){
+            return items[i];
+        }
+    }
+}

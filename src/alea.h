@@ -8,4 +8,6 @@
 
 int alea(int borneMin,int borneMax);
 
+int pondAlea(int items[],int pourcentage[]);
+
 #endif
