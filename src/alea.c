@@ -20,21 +20,25 @@ int alea(int borneMin,int borneMax){
 }
 
 //Tentative
+/*
+ *  On considère en paramètre un tableau d'entier items contenant les valeurs qui doivent sortir du tirage de la fontion et un tableau d'entier contenant le pourcentage
+ *  de chance d'apparition de la valeur correspondante à la case dans items.
+ *  On vérifie que la somme des pourcentages du tableau est bien égale à 100.
+ *  On tire un nombre aléatoire entre 1 et 100 qui va déterminer quelle valeur dans items va être renvoyée.
+ *  On teste alors si le nombre tiré est bien compris dans l'intervalle borné avec le pourcentage précédent et le pourcentage suivant.
+ */
 int pondAlea(int items[],int pourcentage[])
 {
-    #if 0
-    int somme;
+    int sommePourcents = 0;
     for(int i=0;i<sizeof(pourcentage);i++){
-        somme += pourcentage[i];
+        sommePourcents += pourcentage[i];
     }
-    int pond = alea(1,somme);
-    for(int i=1;i<sizeof(pourcentage);i++){
-        if(pond<=(100+pourcentage[i])%100 && pond>=(100-pourcentage[i])%100){
-            return items[i];
-        }
+    if(sommePourcents != 100){
+        exit(EXIT_FAILURE);
     }
-    #endif
     int pond = alea(1,100);
+
+    //Partie à améliorer
     if(pond>=1 && pond<=25){
         return items[0];
     } else if(pond>=26 && pond<=50) {
