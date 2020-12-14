@@ -130,9 +130,7 @@ void afficheGrid(){
         }
         printf("\n");
         //Même chose pour les murs sud
-        if(i == SIZE-1){
-            printf(" ");
-        }
+        printf(" ");
         for(int j = 0; j<SIZE; j++){
             if(t[j][i].murSud == true){
                 printf("---");
@@ -226,6 +224,103 @@ void useCapa(int id, int n){
     {
     case 0:
         /* Création Mur */
+        for(int i = 0; i<SIZE; i++){
+            for(int j = 0; j<SIZE; j++){
+                if(t[j][i].joueurPresent){
+                    if(t[j][i].joueur.id == id){
+                        capacite *c = (capacite *)malloc(sizeof(capacite));
+                        c = t[j][i].joueur.capacite.p;
+                        capacite *prec = (capacite *)malloc(sizeof(capacite));
+                        prec = t[j][i].joueur.capacite.p;
+                        //Si le joueur a la capacité, on notifie que l'action est possible et on supprime la capacité de l'inventaire
+                        while(c != NULL){
+                            if(c->type == n){
+                                possible = true;
+                                prec->s = c->s;
+                                free(c);
+                                break;
+                            }
+                            prec = c;
+                            c = c->s;
+                        }
+                    }
+                }
+            }
+        }
+        if(possible){
+            char choix, temp;
+            int posY, posX;
+            //On lit la position par lettres + chiffre (comme affiché par le tableau);
+            printf("En quelle case voulez vous placer un mur ?\n");
+            do{
+                printf("Rentrez une lettre valide (entre a et f) : ");
+                scanf("%c", &choix);
+                //On place le retour chariot dans une variable annexe
+                scanf("%c", &temp);
+            }while(choix<65 || choix>70 && choix<97 || choix>102);
+            do{
+                printf("Rentrez le numero valide (entre 0 et 5): ");
+                scanf("%d", &posY);
+            }while(posY < 0 || posY >5);
+            //On va maintenant convertir la lettre en chiffre correspondant à la case
+            if(choix >= 97 && choix <= 102){
+                //Cas d'une minuscule
+                posX = choix - 97;
+            }else if(choix >= 65 && choix <= 70){
+                //Cas d'une majuscule
+                posX = choix - 65;
+            }
+            //Choix de où placer le mur
+            printf("Quel mur voulez vous creer ?\nZ pour nord, S pour sud, Q pour ouest et d pour est.\n");
+            do{
+                /*Z = 90, S = 83, Q = 81, D = 68
+                z = 122, s = 115, q = 113, d = 100*/
+                printf("Choix : ");
+                //On place le retour chariot dans une variable annexe
+                scanf("%c", &temp);
+                scanf("%c", &choix);
+            }while(choix != 68 && choix != 81 && choix != 83 && choix != 90 && choix != 122 && choix != 115 && choix != 113 && choix != 100);
+            //Pour éviter de multiplier les case, je vais passer le choix en majuscule s'il est en majuscule
+            if(choix == 122 || choix == 115 || choix == 113 || choix == 100){
+                choix -= 32;
+            }
+            switch(choix)
+            {
+                case 90:
+                    {
+                        //On place un mur au Nord (Sans oublier celui au sud de la case au dessus)
+                        t[posX][posY].murNord = true;
+                        t[posX][posY-1].murSud = true;
+                    }
+                    break;
+                
+                case 83:
+                    {
+                        //On place un mur au Sud (Sans oublier celui au nord de la case en dessous)
+                        t[posX][posY].murSud = true;
+                        t[posX][posY+1].murNord = true;
+                    }
+                    break;
+                
+                case 81:
+                    {
+                        //On place un mur au à l'Ouest (Sans oublier celui à l'est de la case à gauche)
+                        t[posX][posY].murOuest = true;
+                        t[posX-1][posY].murEst = true;
+                    }
+                    break;
+
+                case 68:
+                    {
+                        //On place un mur à l'Est (Sans oublier celui à l'ouest de la case à droite)
+                        t[posX][posY].murEst = true;
+                        t[posX+1][posY].murOuest = true;
+                    }
+                    break;
+            }
+        }else{
+            printf("Action impossible\n");
+        }    
         break;
     
     case 1:
@@ -239,7 +334,7 @@ void useCapa(int id, int n){
                         capacite *prec = (capacite *)malloc(sizeof(capacite));
                         prec = t[j][i].joueur.capacite.p;
                         //Si le joueur a la capacité, on notifie que l'action est possible et on supprime la capacité de l'inventaire
-                        while(c->s != NULL){
+                        while(c != NULL){
                             if(c->type == n){
                                 possible = true;
                                 prec->s = c->s;
@@ -295,7 +390,7 @@ void useCapa(int id, int n){
                         capacite *prec = (capacite *)malloc(sizeof(capacite));
                         prec = t[j][i].joueur.capacite.p;
                         //On parcourt les capacités jusqu'au bout
-                        while(c->s != NULL){
+                        while(c != NULL){
                             //Si le joueur a la capacité, on execute l'action
                             if(c->type == n){
                                 tourne(id, 1);
