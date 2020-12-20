@@ -236,6 +236,10 @@ void useCapa(int id, int n){
                         while(c != NULL){
                             if(c->type == n){
                                 possible = true;
+                                //Si on pointe sur la tête de la liste, alors il ne faut pas oublier de changer la tête avant de la supprimer
+                                if(prec == c){
+                                    t[j][i].joueur.capacite.p = c->s; 
+                                }
                                 prec->s = c->s;
                                 free(c);
                                 break;
@@ -337,6 +341,9 @@ void useCapa(int id, int n){
                         while(c != NULL){
                             if(c->type == n){
                                 possible = true;
+                                if(prec == c){
+                                    t[j][i].joueur.capacite.p = c->s; 
+                                }
                                 prec->s = c->s;
                                 free(c);
                                 break;
@@ -396,6 +403,9 @@ void useCapa(int id, int n){
                                 tourne(id, 1);
                                 tourne(id, 1);
                                 possible = true;
+                                if(prec == c){
+                                    t[j][i].joueur.capacite.p = c->s; 
+                                }
                                 prec->s = c->s;
                                 free(c);
                                 break;
@@ -426,6 +436,9 @@ void useCapa(int id, int n){
                             while(c != NULL){
                                 if(c->type == n){
                                     possible = true;
+                                    if(prec == c){
+                                       t[j][i].joueur.capacite.p = c->s; 
+                                    }
                                     prec->s = c->s;
                                     free(c);
                                     break;
@@ -438,8 +451,10 @@ void useCapa(int id, int n){
                 }
             }
 
-            if(!possible){
-                printf("Nouveau tour impossible");
+            if(possible){
+                printf("Nouveau tour !\n");
+            }else{
+                printf("Nouveau tour impossible\n");
             }
         }
         break;
