@@ -413,10 +413,35 @@ void useCapa(int id, int n){
         break;
 
     case 3:
-        /* Nouveau tour */
-        break;
-            
-    default:
+        {
+            for(int i = 0; i<SIZE; i++){
+                for(int j = 0; j<SIZE; j++){
+                    if(t[j][i].joueurPresent){
+                        if(t[j][i].joueur.id == id){
+                            capacite *c = (capacite *)malloc(sizeof(capacite));
+                            c = t[j][i].joueur.capacite.p;
+                            capacite *prec = (capacite *)malloc(sizeof(capacite));
+                            prec = t[j][i].joueur.capacite.p;
+                            //Si le joueur a la capacité, on notifie que l'action est possible et on supprime la capacité de l'inventaire
+                            while(c != NULL){
+                                if(c->type == n){
+                                    possible = true;
+                                    prec->s = c->s;
+                                    free(c);
+                                    break;
+                                }
+                                prec = c;
+                                c = c->s;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(!possible){
+                printf("Nouveau tour impossible");
+            }
+        }
         break;
     }
 }
