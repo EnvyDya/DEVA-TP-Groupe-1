@@ -68,14 +68,15 @@ int main(int argc, char **argv){
     afficheGrid();
     useCapa(2, 1);
     afficheGrid();
-    useCapa(2, 0);
+    useCapa(1, 3);
     afficheGrid();
     tourne(2, -1);
     tourne(2, -1);
     afficheGrid();
     avance(2);
     afficheGrid();
-    useCapa(2, 0);
+    useCapa(1, 3);
+    afficheGrid();
     return 0;
  
 }
