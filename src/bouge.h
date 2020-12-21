@@ -65,7 +65,7 @@ void initTab(); //Fonction qui initialise le tableau en début de partie.
 
 Liste_Capacites creaListe(); //Fonction qui crée une liste de pouvoirs au début de la partie.
 
-void tourne(int id, int dir); //Fonction qui fait tourner un joueur.
+void tourne(int id, int dir); //Fonction qui fait tourner un joueur. (-1 pour gauche, 1 pour droite)
 
 void afficheGrid(); //Fonction qui affiche le tableau, avec ses murs et ses joueurs.
 

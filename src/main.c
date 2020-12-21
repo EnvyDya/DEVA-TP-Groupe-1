@@ -1,4 +1,4 @@
-#include "bouge.h"
+#include "partie.h"
 #include "affichage.h"
 #include <SDL.h>
 
@@ -45,38 +45,7 @@ int main(int argc, char **argv){
 
     }
     #endif
-    initTab();
-    afficheGrid();
-    avance(1);
-    afficheGrid();
-    avance(1);
-    afficheGrid();
-    avance(1);
-    afficheGrid();
-    tourne(2, -1);
-    afficheGrid();
-    avance(2);
-    afficheGrid();
-    if(!avance(2)){
-        printf("Mouvement impossible, il y a un mur.\n");
-    }
-    tourne(1, -1);
-    afficheGrid(t);
-    tourne(1, -1);
-    afficheGrid();
-    useCapa(1, 1);
-    afficheGrid();
-    useCapa(2, 1);
-    afficheGrid();
-    useCapa(1, 3);
-    afficheGrid();
-    tourne(2, -1);
-    tourne(2, -1);
-    afficheGrid();
-    avance(2);
-    afficheGrid();
-    useCapa(1, 3);
-    afficheGrid();
+    partie();
     return 0;
  
 }
