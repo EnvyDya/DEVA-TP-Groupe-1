@@ -1,4 +1,4 @@
-#include "bouge.h"
+#include "partie.h"
 #include "affichage.h"
 #include <SDL.h>
 
@@ -45,7 +45,7 @@ int main(int argc, char **argv){
 
     }
     #endif
-    initTab();
+    /*initTab();
     afficheGrid();
     avance(1);
     afficheGrid();
@@ -76,7 +76,8 @@ int main(int argc, char **argv){
     avance(2);
     afficheGrid();
     useCapa(1, 3);
-    afficheGrid();
+    afficheGrid();*/
+    partie();
     return 0;
  
 }

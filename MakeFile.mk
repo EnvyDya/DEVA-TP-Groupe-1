@@ -1,5 +1,5 @@
 BIN=bin/TachiAi.exe
-OBJECTS=src/main.o src/bouge.o src/affichage.o src/alea.o
+OBJECTS=src/main.o src/bouge.o src/affichage.o src/alea.o src/partie.o
 CC=gcc
 CFLAGS=-I include -L lib -lmingw32 -lSDL2main -lSDL2
 
@@ -18,6 +18,9 @@ affichage.o: affichage.c
 alea.o: alea.c
 	$(CC) -c src/alea.c $(CFLAGS)
 	
+partie.o: partie.c
+	$(CC) -c src/partie.c $(CFLAGS)
+
 clear:
 	del bin\*.exe src\*.o
 

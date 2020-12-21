@@ -1,4 +1,5 @@
 #include "bouge.h"
+#include "partie.h"
 
 /*
 *   Le tableau est de la forme : t[abscisse][ordonnées].
@@ -258,9 +259,7 @@ void useCapa(int id, int n){
             printf("En quelle case voulez vous placer un mur ?\n");
             do{
                 printf("Rentrez une lettre valide (entre a et f) : ");
-                scanf("%c", &choix);
-                //On place le retour chariot dans une variable annexe
-                scanf("%c", &temp);
+                scanf(" %c", &choix);
             }while(choix<65 || choix>70 && choix<97 || choix>102);
             do{
                 printf("Rentrez le numero valide (entre 0 et 5): ");
@@ -280,9 +279,7 @@ void useCapa(int id, int n){
                 /*Z = 90, S = 83, Q = 81, D = 68
                 z = 122, s = 115, q = 113, d = 100*/
                 printf("Choix : ");
-                //On place le retour chariot dans une variable annexe
-                scanf("%c", &temp);
-                scanf("%c", &choix);
+                scanf(" %c", &choix);
             }while(choix != 68 && choix != 81 && choix != 83 && choix != 90 && choix != 122 && choix != 115 && choix != 113 && choix != 100);
             //Pour éviter de multiplier les case, je vais passer le choix en majuscule s'il est en majuscule
             if(choix == 122 || choix == 115 || choix == 113 || choix == 100){
@@ -452,7 +449,7 @@ void useCapa(int id, int n){
             }
 
             if(possible){
-                printf("Nouveau tour !\n");
+                tour(id);
             }else{
                 printf("Nouveau tour impossible\n");
             }
