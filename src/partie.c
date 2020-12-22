@@ -1,5 +1,6 @@
 #include "partie.h"
 #include "bouge.h"
+#include "alea.h"
 
 int partie(){
     //On fait un tableau neuf au début d'une partie
@@ -70,4 +71,19 @@ void tour(int id){
     }else{
         tourne(id, 1);
     }
+
+    time_t tps;
+    srand((unsigned) time(&tps));
+    int nbAlea = rand()%10;
+    //Une chance sur 10 qu'une nouvelle capacité apparaisse sur la carte
+    if(nbAlea == 1){
+        //On crée alors une position pour notre nouvelle capacité
+        int posX = rand()%SIZE;
+        int posY = rand()%SIZE;
+        capacite *capa = (capacite *)malloc(sizeof(capacite));
+        capa->s = NULL;
+        //On génère un type aléatoirement
+        capa->type = rand()%4;
+        t[posX][posY].capa = capa;
+    }  
 }

@@ -120,7 +120,10 @@ void afficheGrid(){
                 }else if(t[j][i].joueur.orientation == 3){
                     printf("<");
                 }
-            }else{
+            }else if(t[j][i].capa != NULL){
+                printf("o");
+            }
+            else{
                 printf(" ");
             }
             if(t[j][i].murEst){
@@ -178,6 +181,19 @@ bool avance(int id){
             t[posX][posY-1].joueur = p;
             t[posX][posY-1].joueurPresent = true;
             t[posX][posY].joueurPresent = false;
+            //Test si une capacité est sur la nouvelle case
+            if(t[posX][posY-1].capa != NULL){
+                capacite *capa = t[posX][posY-1].capa;
+                printf("Capacite %d ramassee !\n", capa->type+1);
+                t[posX][posY-1].capa = NULL;
+                capacite *courant = t[posX][posY-1].joueur.capacite.p;
+                //On se place à la fin de la liste de capacité du joueur
+                while(courant->s != NULL){
+                    courant = courant->s;
+                }
+                //On met la nouvelle capacité à la fin de la liste du joueur
+                courant->s = capa;
+            }
             return true;
         }else{
             //Si un mur bloque l'action, on renvoie false et on ne fait pas bouger le joueur.
@@ -190,6 +206,19 @@ bool avance(int id){
             t[posX+1][posY].joueur = p;
             t[posX+1][posY].joueurPresent = true;
             t[posX][posY].joueurPresent = false;
+            //Test si une capacité est sur la nouvelle case
+            if(t[posX+1][posY].capa != NULL){
+                capacite *capa = t[posX+1][posY].capa;
+                printf("Capacite %d ramassee !\n", capa->type+1);
+                t[posX+1][posY].capa = NULL;
+                capacite *courant = t[posX+1][posY].joueur.capacite.p;
+                //On se place à la fin de la liste de capacité du joueur
+                while(courant->s != NULL){
+                    courant = courant->s;
+                }
+                //On met la nouvelle capacité à la fin de la liste du joueur
+                courant->s = capa;
+            }
             return true;
         }else{
             return false;
@@ -201,6 +230,19 @@ bool avance(int id){
             t[posX][posY+1].joueur = p;
             t[posX][posY+1].joueurPresent = true;
             t[posX][posY].joueurPresent = false;
+            //Test si une capacité est sur la nouvelle case
+            if(t[posX][posY+1].capa != NULL){
+                capacite *capa = t[posX][posY+1].capa;
+                printf("Capacite %d ramassee !\n", capa->type+1);
+                t[posX][posY+1].capa = NULL;
+                capacite *courant = t[posX][posY+1].joueur.capacite.p;
+                //On se place à la fin de la liste de capacité du joueur
+                while(courant->s != NULL){
+                    courant = courant->s;
+                }
+                //On met la nouvelle capacité à la fin de la liste du joueur
+                courant->s = capa;
+            }
             return true;
         }else{
             return false;
@@ -211,6 +253,19 @@ bool avance(int id){
             t[posX-1][posY].joueur = p;
             t[posX-1][posY].joueurPresent = true;
             t[posX][posY].joueurPresent = false;
+            //Test si une capacité est sur la nouvelle case
+            if(t[posX-1][posY].capa != NULL){
+                capacite *capa = t[posX-1][posY].capa;
+                printf("Capacite %d ramassee !\n", capa->type+1);
+                t[posX-1][posY].capa = NULL;
+                capacite *courant = t[posX-1][posY].joueur.capacite.p;
+                //On se place à la fin de la liste de capacité du joueur
+                while(courant->s != NULL){
+                    courant = courant->s;
+                }
+                //On met la nouvelle capacité à la fin de la liste du joueur
+                courant->s = capa;
+            }
             return true;
         }else{
             return false;
