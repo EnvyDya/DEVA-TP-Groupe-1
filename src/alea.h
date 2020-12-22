@@ -6,7 +6,9 @@
 
 #define MAX_TAB_ALEA 10
 
-int alea(int borneMin,int borneMax);
+time_t tps;
+
+int alea(int borneInf,int borneSup);
 
 int pondAlea(int items[],int pourcentage[]);
 
