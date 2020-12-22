@@ -10,6 +10,4 @@ time_t tps;
 
 int alea(int borneInf,int borneSup);
 
-int pondAlea(int items[],int pourcentage[]);
-
 #endif
