@@ -138,8 +138,24 @@ int partieSolo(){
     while(!gagne){
         if(idJoueur == 1){
             idJoueur++;
+            tourOrdi(idJoueur);
         } else {
             idJoueur--;
+            tour(idJoueur);
         }
+        for(int i = 0; i<SIZE; i++){
+            for(int j = 0; j<SIZE; j++){
+                if(t[i][j].joueurPresent){
+                    cpJoueur++;
+                }
+            }
+        }
+        if(cpJoueur == 1){
+            gagne = true;
+        }
+        cpJoueur = 0;
     }
+    afficheGrid();
+    printf("Victoire du joueur %d !", idJoueur);
+    return idJoueur;
 }
