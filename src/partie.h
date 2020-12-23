@@ -22,4 +22,14 @@ int partie();
 void tour(int id);
 
 
+/*
+* La structure est similaire à "tour" mais est effectué pour le joueur "ordinateur"
+*/
+void tourOrdi();
+
+/*
+* La fonction possède la même structure que partie() mais met en place un joueur contre l'"ordinateur".
+*/
+int partieSolo();
+
 #endif
