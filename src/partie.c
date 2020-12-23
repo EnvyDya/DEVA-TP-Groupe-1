@@ -87,3 +87,75 @@ void tour(int id){
         t[posX][posY].capa = capa;
     }  
 }
+
+void tourOrdi(int id){
+    //On considère que l'id de l'ordinateur doit être 2.
+    if(id == 2){
+        int probCapa,action;
+
+        afficheGrid();
+
+        //L'ordinateur a une chance sur 3 d'utiliser une capacité.
+        probCapa = rand()%3;
+        if(probCapa == 1){
+            //La capacité à utiliser est défini de manière pseudo-aléatoire.
+            int capa = alea(1,4);
+            useCapa(id,capa-1);
+            afficheGrid();
+        }
+
+        //On définit l'action à réaliser à 0 (tourner à gauche), 1 (avancer) ou 2 (tourner à droite) car la fonction ne peut retourner un nombre négatif.
+        action = alea(0,2);
+        if(action == 0){
+            tourne(id,-1);
+        } else if (action == 1) {
+            avance(id);
+        } else {
+            tourne(id,1);
+        }
+
+        time_t tps;
+        srand((unsigned) time(&tps));
+        int nbAlea = rand()%10;
+        //Une chance sur 10 qu'une nouvelle capacité apparaisse sur la carte
+        if(nbAlea == 1){
+        //On crée alors une position pour notre nouvelle capacité
+        int posX = rand()%SIZE;
+        int posY = rand()%SIZE;
+        capacite *capa = (capacite *)malloc(sizeof(capacite));
+        capa->s = NULL;
+        //On génère un type aléatoirement
+        capa->type = rand()%4;
+        t[posX][posY].capa = capa;
+        }
+    }
+}
+
+int partieSolo(){
+    initTab();
+    bool gagne = false;
+    int cpJoueur = 0, idJoueur = 2;
+    while(!gagne){
+        if(idJoueur == 1){
+            idJoueur++;
+            tourOrdi(idJoueur);
+        } else {
+            idJoueur--;
+            tour(idJoueur);
+        }
+        for(int i = 0; i<SIZE; i++){
+            for(int j = 0; j<SIZE; j++){
+                if(t[i][j].joueurPresent){
+                    cpJoueur++;
+                }
+            }
+        }
+        if(cpJoueur == 1){
+            gagne = true;
+        }
+        cpJoueur = 0;
+    }
+    afficheGrid();
+    printf("Victoire du joueur %d !", idJoueur);
+    return idJoueur;
+}
