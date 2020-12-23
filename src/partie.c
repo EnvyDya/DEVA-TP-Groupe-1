@@ -88,9 +88,8 @@ void tour(int id){
     }  
 }
 
-void tourOrdi(int id){
+void tourOrdi(){
     //On considère que l'id de l'ordinateur doit être 2.
-    if(id == 2){
         int probCapa,action;
 
         afficheGrid();
@@ -100,18 +99,18 @@ void tourOrdi(int id){
         if(probCapa == 1){
             //La capacité à utiliser est défini de manière pseudo-aléatoire.
             int capa = alea(1,4);
-            useCapa(id,capa-1);
+            useCapa(2,capa-1);
             afficheGrid();
         }
 
         //On définit l'action à réaliser à 0 (tourner à gauche), 1 (avancer) ou 2 (tourner à droite) car la fonction ne peut retourner un nombre négatif.
         action = alea(0,2);
         if(action == 0){
-            tourne(id,-1);
+            tourne(2,-1);
         } else if (action == 1) {
-            avance(id);
+            avance(2);
         } else {
-            tourne(id,1);
+            tourne(2,1);
         }
 
         time_t tps;
@@ -128,7 +127,6 @@ void tourOrdi(int id){
         capa->type = rand()%4;
         t[posX][posY].capa = capa;
         }
-    }
 }
 
 int partieSolo(){
@@ -138,7 +136,7 @@ int partieSolo(){
     while(!gagne){
         if(idJoueur == 1){
             idJoueur++;
-            tourOrdi(idJoueur);
+            tourOrdi();
         } else {
             idJoueur--;
             tour(idJoueur);
