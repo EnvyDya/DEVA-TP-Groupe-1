@@ -47,8 +47,43 @@ void tour(int id){
 
     //Cas ou on utilise une capacité
     if(choix == 79 || choix == 111){
-        int capa;
-        printf("Liste des capacites :\n1 - Poser un mur\n2 - Reculer l'adversaire\n3 - Demi-tour\n4 - 2 tours\nQue voulez vous faire ? ");
+        int capa, c1 = 0, c2 = 0, c3 = 0, c4 = 0;
+        //On compte d'abord le nombre de capacités en stock
+        for(int i = 0; i<SIZE; i++){
+            for(int j = 0; j<SIZE; j++){
+                if(t[j][i].joueurPresent){
+                    if(t[j][i].joueur.id == id){
+                        //On a trouvé le bon joueur
+                        capacite *cap = t[j][i].joueur.capacite.p;
+                        //On compte chaque capacité
+                        while(cap != NULL){
+                            switch (cap->type)
+                            {
+                                case 0:
+                                    c1++;
+                                    break;
+                                
+                                case 1:
+                                    c2++;
+                                    break;
+
+                                case 2:
+                                    c3++;
+                                    break;
+                                
+                                case 3:
+                                    c4++;
+                                    break;
+                                
+                            }
+                            cap = cap->s;
+                        }
+                        break;
+                    }
+                }
+        }
+    }
+        printf("Liste des capacites :\n1 - Poser un mur (Dispo : %d)\n2 - Reculer l'adversaire (Dispo : %d)\n3 - Demi-tour (Dispo : %d)\n4 - 2 tours (Dispo : %d)\nQue voulez vous faire ? ", c1, c2, c3, c4);
         do{
             scanf("%d", &capa);
         }while(capa != 1 && capa != 2 && capa != 3 && capa != 4);
