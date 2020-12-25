@@ -32,4 +32,22 @@ void tourOrdi();
 */
 int partieSolo();
 
+
+/*
+* Fonction qui gère le jeu complet
+*/
+
+void jeu();
+
+/*
+* Fonction qui écrit un entier dans un fichier save
+*/
+void ecritVal(int e);
+
+/*
+* Fonction qui lit un entier dans le fichier save
+*/
+
+int litVal();
+
 #endif

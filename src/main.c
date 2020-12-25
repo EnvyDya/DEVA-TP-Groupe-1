@@ -45,7 +45,7 @@ int main(int argc, char **argv){
 
     }
     #endif
-    partie();
+    jeu();
     return 0;
  
 }

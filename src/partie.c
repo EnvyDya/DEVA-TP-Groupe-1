@@ -188,7 +188,68 @@ int partieSolo(){
         }
         cpJoueur = 0;
     }
+    printf("\n");
     afficheGrid();
     printf("Victoire du joueur %d !", idJoueur);
     return idJoueur;
+}
+
+void jeu(){
+    printf("Bienvenue dans Tachi-Ai!\nQue voulez vous faire ?\n1 - Jeu multi\n2 - Jeu solo (facile)\n3 - Jeu solo (moins facile)\n");
+    int choix, highscore;
+    highscore = litVal();
+    scanf("%d", &choix);
+    switch(choix){
+        case 1:
+            do{ 
+                partie();
+                printf("\nVoulez vous rejouer ?\n1 - Oui\n2 - Non\n");
+                scanf("%d", &choix);
+            }while(choix == 1);
+            break;
+        case 2:
+            {
+                int score = 0;
+                do{
+                    int result;
+                    result = partieSolo();
+                    if(result == 1){
+                        score++;
+                        if(score > highscore){
+                            ecritVal(score);
+                            highscore = score;
+                        }
+                    }else{
+                        score = 0;
+                    }
+                    printf("\nVoulez vous rejouer ?\n1 - Oui\n2 - Non");
+                    scanf("%d", &choix);
+                }while(choix == 1);
+            }
+            break;
+        case 3:
+            printf("Non implemente");
+            break;
+        default:
+            printf("Veuillez saisir une valeur correcte.\n");
+    }
+}
+
+void ecritVal(int e){
+    FILE *save;
+    save = fopen("bin/save.txt", "w");
+    fprintf(save, "%d", e);
+    fclose(save);   
+}
+
+int litVal(){
+    FILE *save;
+    int highscore;
+    save = fopen("bin/save.txt", "r");
+    if(save == NULL){
+        return 0;
+    }
+    fscanf(save,"%d", &highscore);
+    fclose(save); 
+    return highscore;
 }

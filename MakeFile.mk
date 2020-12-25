@@ -22,7 +22,10 @@ partie.o: partie.c
 	$(CC) -c src/partie.c $(CFLAGS)
 
 clear:
-	del bin\*.exe src\*.o
+	del bin\*.exe src\*.o bin\*.txt
+
+clearT:
+	del bin\*.txt
 
 clearO:
 	del src\*.o

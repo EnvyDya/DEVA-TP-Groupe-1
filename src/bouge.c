@@ -419,6 +419,8 @@ void useCapa(int id, int n){
                                 avance(id+1);
                                 tourne(id+1, -1);
                                 tourne(id+1, -1);
+                                i = SIZE;
+                                j = SIZE;
                                 break;
                             }else{
                                 tourne(id-1, -1);
@@ -426,6 +428,8 @@ void useCapa(int id, int n){
                                 avance(id-1);
                                 tourne(id-1, -1);
                                 tourne(id-1, -1);
+                                i = SIZE;
+                                j = SIZE;
                                 break;
                             }
                         }
@@ -615,6 +619,8 @@ void useCapaOrdi(int n){
                             avance(1);
                             tourne(1,-1);
                             tourne(1,-1);
+                            i = SIZE;
+                            j = SIZE;
                             break;
                         }
                     }
