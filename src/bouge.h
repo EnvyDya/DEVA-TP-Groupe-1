@@ -72,4 +72,9 @@ void afficheGrid(); //Fonction qui affiche le tableau, avec ses murs et ses joue
 bool avance(int j); //Fonction qui fait avancer le joueur (repéré par son id dans j).
 
 void useCapa(int id, int n); //Fonction qui permet au joueur (repéré par son id) d'utiliser une capacité n (n entré au clavier).
+
+/*
+* Fonction permettant à l'ordinareur d'utiliser une capacité n de manière pseudo-aléatoire.
+*/
+void useCapaOrdi();
 #endif

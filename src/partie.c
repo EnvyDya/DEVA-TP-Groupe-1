@@ -134,7 +134,7 @@ void tourOrdi(){
         if(probCapa == 1){
             //La capacité à utiliser est défini de manière pseudo-aléatoire.
             int capa = alea(1,4);
-            useCapa(2,capa-1);
+            useCapaOrdi(capa-1);
             afficheGrid();
         }
 

@@ -512,3 +512,187 @@ void useCapa(int id, int n){
         break;
     }
 }
+
+void useCapaOrdi(int n){
+    bool possible = false;
+    switch(n){
+        case 0: //Création d'un mur
+        {
+                for(int i = 0;i<SIZE;i++){
+                    for(int j = 0;j<SIZE;j++){
+                        if(t[j][i].joueurPresent){
+                            if(t[j][i].joueur.id == 2){
+                                capacite *c = (capacite *)malloc(sizeof(capacite));
+                                c = t[j][i].joueur.capacite.p;
+                                capacite *prec = (capacite *)malloc(sizeof(capacite));
+                                prec = t[j][i].joueur.capacite.p;
+                                while(c != NULL){
+                                    if(c->type == n){
+                                        possible = true;
+                                        if(prec == c){
+                                            t[j][i].joueur.capacite.p = c->s;
+                                        }
+                                        prec->s = c->s;
+                                        free(c);
+                                        break;
+                                    }
+                                    prec = c;
+                                    c = c->s;
+                                }
+                            }
+                        }
+                    }
+                }
+                if(possible){
+                    int posX,posY,orientation;
+                    posX = alea(0,5);
+                    posY = alea(0,5);
+                    orientation = alea(0,3);
+                    switch(orientation){
+                        case 0: //Nord
+                            {
+                                t[posX][posY].murNord = true;
+                                t[posX][posY-1].murSud = true;
+                            }
+                            break;
+                        case 1: //Est
+                            {
+                                t[posX][posY].murEst = true;
+                                t[posX+1][posY].murOuest = true;
+                            }
+                            break;
+                        case 2: //Sud
+                            {
+                                t[posX][posY].murSud = true;
+                                t[posX][posY+1].murNord = true;
+                            }
+                            break;
+                        case 3: //Ouest
+                            {
+                                t[posX][posY].murOuest = true;
+                                t[posX-1][posY].murEst = true;
+                            }
+                            break;
+                    }
+                } else {
+                    printf("La capacité du bot a échoué\n");
+                }
+                break;
+        }
+        case 1: //Faire reculer l'adversaire
+        {
+                for(int i=0;i<SIZE;i++){
+                    for(int j = 0;j<SIZE;j++){
+                        if(t[j][i].joueurPresent){
+                            if(t[j][i].joueur.id == 2){
+                                capacite *c = (capacite *)malloc(sizeof(capacite));
+                                c = t[j][i].joueur.capacite.p;
+                                capacite *prec = (capacite *)malloc(sizeof(capacite));
+                                prec = t[j][i].joueur.capacite.p;
+                                while(c != NULL){
+                                    if(c->type == n){
+                                        possible = true;
+                                        if(prec == c){
+                                            t[j][i].joueur.capacite.p = c->s;
+                                        }
+                                        prec->s = c->s;
+                                        free(c);
+                                        break;
+                                    }
+                                    prec = c;
+                                    c = c->s;
+                                }
+                            }
+                        }
+                    }
+                }
+            if(possible){
+                for(int i = 0;i<SIZE;i++){
+                    for(int j = 0;j<SIZE;j++){
+                        if(t[j][i].joueur.id == 1){
+                            tourne(1,-1);
+                            tourne(1,-1);
+                            avance(1);
+                            tourne(1,-1);
+                            tourne(1,-1);
+                            break;
+                        }
+                    }
+                }
+            } else {
+                printf("La capacité du bot a échoué\n");
+            }
+            break;
+        }    
+        case 2: //Demi-tour
+        {
+                for(int i = 0;i<SIZE;i++){
+                    for(int j =0;j<SIZE;j++){
+                        if(t[j][i].joueurPresent){
+                            if(t[j][i].joueur.id == 2){
+                                capacite *c = (capacite *)malloc(sizeof(capacite));
+                                c = t[j][i].joueur.capacite.p;
+                                capacite *prec = (capacite *)malloc(sizeof(capacite));
+                                prec = t[j][i].joueur.capacite.p;
+                                //On parcourt les capacités jusqu'au bout
+                                while(c != NULL){
+                                    //Si le joueur a la capacité, on execute l'action
+                                    if(c->type == n){
+                                        tourne(2, 1);
+                                        tourne(2, 1);
+                                        possible = true;
+                                        if(prec == c){
+                                            t[j][i].joueur.capacite.p = c->s; 
+                                        }
+                                        prec->s = c->s;
+                                        free(c);
+                                        break;
+                                    }
+                                    prec = c;
+                                    c = c->s;
+                                }
+                            }
+                        }
+                    }
+                }
+                if(!possible){
+                    printf("La capacité du bot a échoué\n");
+                }
+                break;
+        }
+        case 3: //Rejouer un tour
+        {
+                for(int i = 0;i<SIZE;i++){
+                    for(int j = 0;j<SIZE;j++){
+                        if(t[j][i].joueurPresent){
+                            if(t[j][i].joueur.id == 2){
+                                capacite *c = (capacite *)malloc(sizeof(capacite));
+                                c = t[j][i].joueur.capacite.p;
+                                capacite *prec = (capacite *)malloc(sizeof(capacite));
+                                prec = t[j][i].joueur.capacite.p;
+                                while(c != NULL){
+                                    if(c->type == n){
+                                        possible = true;
+                                        if(prec == c){
+                                            t[j][i].joueur.capacite.p = c->s;
+                                        }
+                                        prec->s = c->s;
+                                        free(c);
+                                        break;
+                                    }
+                                    prec = c;
+                                    c = c->s;
+                                }
+                            }
+                        }
+                    }
+                }
+                if(possible){
+                    tourOrdi();
+                } else {
+                    printf("La capacité du bot a échoué\n");
+                }
+                break;
+        }
+    }
+}
