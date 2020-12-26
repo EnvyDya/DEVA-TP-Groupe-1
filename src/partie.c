@@ -161,6 +161,30 @@ void tourOrdi(){
                         break;
 
                 }
+            }else{
+                //L'ordinateur a une chance sur 3 d'utiliser une capacité.
+                probCapa = rand()%3;
+                if(probCapa == 1){
+                //La capacité à utiliser est défini de manière pseudo-aléatoire.
+                int capa = alea(1,4);
+                useCapaOrdi(capa-1);
+                }
+            //On définit le mouvement à réaliser, 75% de chances d'avancer et 25% de chances de tourner.
+            mouv = rand()%4;
+            if(mouv >= 0 && mouv <= 2){
+                avance(2);
+                } else {
+                    /*
+                    * 0: tourner à gauche
+                    * 1: tourner à doite
+                    */
+                    int tourner = alea(0,1);
+                    if(tourner == 0){
+                        tourne(2,-1);
+                    } else {
+                        tourne(2,1);
+                    }
+                }
             }
         } else {
             //L'ordinateur a une chance sur 3 d'utiliser une capacité.
