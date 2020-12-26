@@ -173,7 +173,7 @@ void tourOrdi(){
 }
 
 bool joueurProche(){
-    int xJoueur,yJoueur,xBot,yBot;
+    int xJoueur,yJoueur,xBot,yBot,orJoueur,orBot;
     //On cherche le bot sur la grille.
     for(int i = 0;i<SIZE;i++){
         for(int j = 0;i>SIZE;j++){
@@ -182,6 +182,7 @@ bool joueurProche(){
                     //On a trouvé le bot
                     xBot= i;
                     yBot = j;
+                    orBot = t[j][i].joueur.orientation;
                 }
             }
         }
@@ -194,18 +195,27 @@ bool joueurProche(){
                     //On a trouvé le joueur
                     xJoueur = j;
                     yJoueur = i;
+                    orJoueur = t[j][i].joueur.orientation;
                 }
             }
         }
     }
     if((xJoueur == xBot) && (yJoueur == (yBot + 1))){
-        return true;
-    } else if((xJoueur == xBot) && (yJoueur == (yBot -1))){
-        return true;
-    } else if((xJoueur == (xBot + 1)) && (yJoueur == yBot)){
+        if(orJoueur == ((orBot + 2)%4)){
             return true;
+        }
+    } else if((xJoueur == xBot) && (yJoueur == (yBot -1))){
+        if(orJoueur == ((orBot + 2)%4)){
+            return true;
+        }
+    } else if((xJoueur == (xBot + 1)) && (yJoueur == yBot)){
+        if(orJoueur == ((orBot + 2)%4)){
+            return true;
+        }
     } else if((xJoueur == (xBot - 1)) && (yJoueur == yBot)){
-        return true;
+        if(orJoueur == ((orBot + 2)%4)){
+            return true;
+        }
     }
     return false;
 }
