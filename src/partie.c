@@ -143,7 +143,7 @@ void tourOrdi(){
                 switch(mouv){
                     case 1:
                     {
-                        avancer(2);
+                        avance(2);
                         break;
                     }
                     case 2:
