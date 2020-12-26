@@ -127,7 +127,6 @@ void tourOrdi(){
     //On considère que l'id de l'ordinateur doit être 2.
         int probCapa,mouv;
 
-        afficheGrid();
         mouv = meilleurMouv();
 
         if(mouv != 0){
@@ -137,7 +136,6 @@ void tourOrdi(){
                 //La capacité à utiliser est défini de manière pseudo-aléatoire.
                 int capa = alea(1,4);
                 useCapaOrdi(capa-1);
-                afficheGrid();
             }
             //50% de chances de réaliser le meilleur mouvement
             int doMouv = rand()%4;
@@ -171,7 +169,6 @@ void tourOrdi(){
                 //La capacité à utiliser est défini de manière pseudo-aléatoire.
                 int capa = alea(1,4);
                 useCapaOrdi(capa-1);
-                afficheGrid();
             }
             //On définit le mouvement à réaliser, 75% de chances d'avancer et 25% de chances de tourner.
             mouv = rand()%4;
