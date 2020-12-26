@@ -128,8 +128,9 @@ void tourOrdi(){
         int probCapa,mouv;
 
         afficheGrid();
+        mouv = meilleurMouv();
 
-        if(meilleurMouv() != 0){
+        if(mouv != 0){
             //L'ordinateur a une chance sur 3 d'utiliser une capacité.
             probCapa = rand()%3;
             if(probCapa == 1){
@@ -138,7 +139,6 @@ void tourOrdi(){
                 useCapaOrdi(capa-1);
                 afficheGrid();
             }
-            mouv = meilleurMouv();
             //50% de chances de réaliser le meilleur mouvement
             int doMouv = rand()%4;
             if(doMouv == 0 || doMouv == 1){
