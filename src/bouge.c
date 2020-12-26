@@ -96,20 +96,16 @@ void tourne(int id, int dir){
 */
 void afficheGrid(){
     //On affiche le mur du haut (x3 par case pour éventuel mur gauche, joueur, mur droit)
-    printf(" ");
+    printf("  ");
     for(int i = 0; i<SIZE; i++){
         printf("-%c-", 'a'+i);
     }
     printf("\n");
     for(int i = 0; i<SIZE; i++){
-        printf("%d", i);
+        printf("%d|", i);
         //Pour chaque case on teste s'il y a un mur/un joueur ou non, si rien on affiche un espace
         for(int j = 0; j<SIZE; j++){
-            if(t[j][i].murOuest){
-                printf("|");
-            }else{
-                printf(" ");
-            }
+            printf(" ");
             if(t[j][i].joueurPresent){
                 if(t[j][i].joueur.orientation == 0){
                     printf("^");
@@ -134,7 +130,7 @@ void afficheGrid(){
         }
         printf("\n");
         //Même chose pour les murs sud
-        printf(" ");
+        printf("  ");
         for(int j = 0; j<SIZE; j++){
             if(t[j][i].murSud == true){
                 printf("---");
