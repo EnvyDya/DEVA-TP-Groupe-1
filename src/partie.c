@@ -125,7 +125,7 @@ void tour(int id){
 
 void tourOrdi(){
     //On considère que l'id de l'ordinateur doit être 2.
-        int probCapa,action;
+        int probCapa,action,tourner;
 
         afficheGrid();
 
@@ -138,14 +138,22 @@ void tourOrdi(){
             afficheGrid();
         }
 
-        //On définit l'action à réaliser à 0 (tourner à gauche), 1 (avancer) ou 2 (tourner à droite) car la fonction ne peut retourner un nombre négatif.
-        action = alea(0,2);
-        if(action == 0){
-            tourne(2,-1);
-        } else if (action == 1) {
+
+        //On défini l'action à réaliser, 75% de chances d'avancer et 25% de chances de tourner.
+        action = rand()%4;
+        if(action >= 0 && action <= 2){
             avance(2);
         } else {
-            tourne(2,1);
+            /*
+            * 0: tourner à gauche
+            * 1: tourner à doite
+            */
+            tourner = alea(0,1);
+            if(tourner == 0){
+                tourne(2,-1);
+            } else {
+                tourne(2,1);
+            }
         }
 
         time_t tps;
@@ -162,6 +170,54 @@ void tourOrdi(){
         capa->type = rand()%4;
         t[posX][posY].capa = capa;
         }
+}
+
+bool joueurProche(){
+    int xJoueur,yJoueur,xBot,yBot,orJoueur,orBot;
+    //On cherche le bot sur la grille.
+    for(int i = 0;i<SIZE;i++){
+        for(int j = 0;i>SIZE;j++){
+            if(t[j][i].joueurPresent){
+                if(t[j][i].joueur.id == 2){
+                    //On a trouvé le bot
+                    xBot= i;
+                    yBot = j;
+                    orBot = t[j][i].joueur.orientation;
+                }
+            }
+        }
+    }
+    //On cherche le joueur sur la grille.
+    for(int i = 0;i<SIZE;i++){
+        for(int j = 0;j<SIZE;j++){
+            if(t[j][i].joueurPresent){
+                if(t[j][i].joueur.id == 1){
+                    //On a trouvé le joueur
+                    xJoueur = j;
+                    yJoueur = i;
+                    orJoueur = t[j][i].joueur.orientation;
+                }
+            }
+        }
+    }
+    if((xJoueur == xBot) && (yJoueur == (yBot + 1))){
+        if(orJoueur == ((orBot + 2)%4)){
+            return true;
+        }
+    } else if((xJoueur == xBot) && (yJoueur == (yBot -1))){
+        if(orJoueur == ((orBot + 2)%4)){
+            return true;
+        }
+    } else if((xJoueur == (xBot + 1)) && (yJoueur == yBot)){
+        if(orJoueur == ((orBot + 2)%4)){
+            return true;
+        }
+    } else if((xJoueur == (xBot - 1)) && (yJoueur == yBot)){
+        if(orJoueur == ((orBot + 2)%4)){
+            return true;
+        }
+    }
+    return false;
 }
 
 int partieSolo(){
