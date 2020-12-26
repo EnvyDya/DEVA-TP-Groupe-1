@@ -172,14 +172,21 @@ void tourOrdi(){
         }
 }
 
-bool joueurProche(){
+/*
+ * La fonction va retourner un entier déterminant le meilleur mouvement à effectuer à faire.
+ * 0: Aléatoire
+ * 1: Avancer pour écraser
+ * 2: Avancer pour séchapper
+ * 3: Tourner
+ */
+int joueurProche(){
     int xJoueur,yJoueur,xBot,yBot,orJoueur,orBot;
     //On cherche le bot sur la grille.
     for(int i = 0;i<SIZE;i++){
         for(int j = 0;i>SIZE;j++){
             if(t[j][i].joueurPresent){
                 if(t[j][i].joueur.id == 2){
-                    //On a trouvé le bot
+                    //On a trouvé le bot.
                     xBot= i;
                     yBot = j;
                     orBot = t[j][i].joueur.orientation;
@@ -192,7 +199,7 @@ bool joueurProche(){
         for(int j = 0;j<SIZE;j++){
             if(t[j][i].joueurPresent){
                 if(t[j][i].joueur.id == 1){
-                    //On a trouvé le joueur
+                    //On a trouvé le joueur.
                     xJoueur = j;
                     yJoueur = i;
                     orJoueur = t[j][i].joueur.orientation;
@@ -200,24 +207,54 @@ bool joueurProche(){
             }
         }
     }
+    //On veut tester si le joueur se trouve dans une des cases à proximité du bot.
     if((xJoueur == xBot) && (yJoueur == (yBot + 1))){
+        //Si le bot a la même orientation que le joueur, il est préférable d'avancer pour écraser sinon si elles sont égales il est préférable d'avancer pour s'achapper.
         if(orJoueur == ((orBot + 2)%4)){
-            return true;
+            return 1;
+        } else if(orJoueur == orBot){
+            return 2;
         }
     } else if((xJoueur == xBot) && (yJoueur == (yBot -1))){
         if(orJoueur == ((orBot + 2)%4)){
-            return true;
+            return 1;
+        } else if(orJoueur == orBot){
+            return 2;
         }
     } else if((xJoueur == (xBot + 1)) && (yJoueur == yBot)){
         if(orJoueur == ((orBot + 2)%4)){
-            return true;
+            return 1;
+        } else if(orJoueur == orBot){
+            return 2;
         }
     } else if((xJoueur == (xBot - 1)) && (yJoueur == yBot)){
         if(orJoueur == ((orBot + 2)%4)){
-            return true;
+            return 1;
+        } else if(orJoueur == orBot){
+            return 2;
         }
     }
-    return false;
+
+    //On va tester la présence d'un joueur en diagonale.
+    if((xJoueur == (xBot - 1) && (yJoueur == (yBot - 1)))){
+        if((orJoueur == 1 || orJoueur == 2) && (orBot == 0 || orBot == 3)){
+            return 3;
+        }
+    } else if((xJoueur == (xBot + 1) && (yJoueur == (yBot - 1)))){
+        if((orJoueur == 2 || orJoueur == 3) && (orBot == 0 || orBot == 1)){
+            return 3;
+        }
+    } else if((xJoueur == (xBot - 1) && (yJoueur == (yBot + 1)))){
+        if((orJoueur == 0 || orJoueur == 1) && (orBot == 2 || orBot == 3)){
+            return 3;
+        }
+    } else if((xJoueur == (xBot + 1) && (yJoueur == (yBot + 1)))){
+        if((orJoueur == 0 || orJoueur == 3) && (orBot == 2 || orBot == 1)){
+            return 3;
+        }
+    }
+    //Si aucun joueur n'est proche alors aucun mouvement n'est meilleur qu'un autre.
+    return 0;
 }
 
 int partieSolo(){
