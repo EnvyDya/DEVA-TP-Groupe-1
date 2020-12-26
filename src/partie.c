@@ -125,34 +125,69 @@ void tour(int id){
 
 void tourOrdi(){
     //On considère que l'id de l'ordinateur doit être 2.
-        int probCapa,action,tourner;
+        int probCapa,mouv;
 
         afficheGrid();
 
-        //L'ordinateur a une chance sur 3 d'utiliser une capacité.
-        probCapa = rand()%3;
-        if(probCapa == 1){
-            //La capacité à utiliser est défini de manière pseudo-aléatoire.
-            int capa = alea(1,4);
-            useCapaOrdi(capa-1);
-            afficheGrid();
-        }
+        if(meilleurMouv() != 0){
+            //L'ordinateur a une chance sur 3 d'utiliser une capacité.
+            probCapa = rand()%3;
+            if(probCapa == 1){
+                //La capacité à utiliser est défini de manière pseudo-aléatoire.
+                int capa = alea(1,4);
+                useCapaOrdi(capa-1);
+                afficheGrid();
+            }
+            mouv = meilleurMouv();
+            //50% de chances de réaliser le meilleur mouvement
+            int doMouv = rand()%4;
+            if(doMouv == 0 || doMouv == 1){
+                switch(mouv){
+                    case 1:
+                        avancer(2);
+                        break;
+                    case 2:
+                        avancer(2);
+                        break;
+                    case 3:
+                        /*
+                        * 0: tourner à gauche
+                        * 1: tourner à doite
+                        */
+                        int tourner = alea(0,1);
+                        if(tourner == 0){
+                            tourne(2,-1);
+                        } else {
+                            tourne(2,1);
+                        }
+                        break;
 
-
-        //On défini l'action à réaliser, 75% de chances d'avancer et 25% de chances de tourner.
-        action = rand()%4;
-        if(action >= 0 && action <= 2){
-            avance(2);
+                }
+            }
         } else {
-            /*
-            * 0: tourner à gauche
-            * 1: tourner à doite
-            */
-            tourner = alea(0,1);
-            if(tourner == 0){
-                tourne(2,-1);
+            //L'ordinateur a une chance sur 3 d'utiliser une capacité.
+            probCapa = rand()%3;
+            if(probCapa == 1){
+                //La capacité à utiliser est défini de manière pseudo-aléatoire.
+                int capa = alea(1,4);
+                useCapaOrdi(capa-1);
+                afficheGrid();
+            }
+            //On définit le mouvement à réaliser, 75% de chances d'avancer et 25% de chances de tourner.
+            mouv = rand()%4;
+            if(mouv >= 0 && mouv <= 2){
+                avance(2);
             } else {
-                tourne(2,1);
+                /*
+                * 0: tourner à gauche
+                * 1: tourner à doite
+                */
+                int tourner = alea(0,1);
+                if(tourner == 0){
+                    tourne(2,-1);
+                } else {
+                    tourne(2,1);
+                }
             }
         }
 
@@ -179,14 +214,14 @@ void tourOrdi(){
  * 2: Avancer pour séchapper
  * 3: Tourner
  */
-int joueurProche(){
+int meilleurMouv(){
     int xJoueur,yJoueur,xBot,yBot,orJoueur,orBot;
     //On cherche le bot sur la grille.
     for(int i = 0;i<SIZE;i++){
         for(int j = 0;i>SIZE;j++){
             if(t[j][i].joueurPresent){
                 if(t[j][i].joueur.id == 2){
-                    //On a trouvé le bot.
+                    //On a trouvé le bot
                     xBot= i;
                     yBot = j;
                     orBot = t[j][i].joueur.orientation;
@@ -199,7 +234,7 @@ int joueurProche(){
         for(int j = 0;j<SIZE;j++){
             if(t[j][i].joueurPresent){
                 if(t[j][i].joueur.id == 1){
-                    //On a trouvé le joueur.
+                    //On a trouvé le joueur
                     xJoueur = j;
                     yJoueur = i;
                     orJoueur = t[j][i].joueur.orientation;
