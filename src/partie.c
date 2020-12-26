@@ -142,12 +142,17 @@ void tourOrdi(){
             if(doMouv == 0 || doMouv == 1){
                 switch(mouv){
                     case 1:
-                        avancer(2);
+                    {
+                        avance(2);
                         break;
+                    }
                     case 2:
-                        avancer(2);
+                    {
+                        avance(2);
                         break;
+                    }
                     case 3:
+                    {
                         /*
                         * 0: tourner à gauche
                         * 1: tourner à doite
@@ -159,6 +164,7 @@ void tourOrdi(){
                             tourne(2,1);
                         }
                         break;
+                    }
 
                 }
             }else{
