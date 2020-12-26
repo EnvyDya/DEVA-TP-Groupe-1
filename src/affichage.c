@@ -90,41 +90,7 @@ void SDL_Menu(){
         SDL_ExitError("Erreur lors de la création du rendu");
     }
 
-    //affichageRendu("assets/menujeu.bmp",fenetre,rendu);
-
-    //Création des textures du menu
-    SDL_Surface *surfaceMenu = NULL;
-    SDL_Texture *textureMenu = NULL;
-
-    surfaceMenu = SDL_LoadBMP("assets/menujeu.bmp");
-
-    if(surfaceMenu == NULL){
-        SDL_ExitErrorWindowRender("La surface n'a pas pu être créée.", fenetre, rendu);
-    }
-
-    textureMenu = SDL_CreateTextureFromSurface(rendu,surfaceMenu);
-    SDL_FreeSurface(surfaceMenu);
-    if(textureMenu == NULL){
-        SDL_ExitErrorWindowRender("La texture n'a pas pu être créée.", fenetre, rendu);
-    }
-
-    //Création du rectangle pour afficher la texture
-    SDL_Rect rectangleMenu;
-
-    //Je charge l'image dans la mémoire
-    if(SDL_QueryTexture(textureMenu, NULL, NULL, &rectangleMenu.w,&rectangleMenu.h)!=0){
-        SDL_ExitErrorWindowRender("Erreur pendant le chargement de la texture", fenetre, rendu);
-    }
-
-    rectangleMenu.x = (Largeur - rectangleMenu.w)/2;
-    rectangleMenu.y = (Hauteur - rectangleMenu.h)/2;
-    
-    //Affichage de l'image du menu
-    if(SDL_RenderCopy(rendu, textureMenu, NULL, &rectangleMenu)!=0){
-        SDL_ExitErrorWindowRender("Erreur lors de l'affichage des textures", fenetre, rendu);
-    }
-    //Rendu :
-    SDL_RenderPresent(rendu);
+    affichageRendu("assets/menujeu.bmp",fenetre,rendu);
     //Cas de passage aux autres affichages du menu
     SDL_Event event;
     bool stop = false;
@@ -139,14 +105,14 @@ void SDL_Menu(){
                         case SDLK_ESCAPE :
                             stop = true;
 
-                        case SDLK_t :{
+                        case SDLK_1 :{
                             SDL_RenderClear(rendu);
                             affichageRendu("assets/reglesjeu.bmp",fenetre,rendu);
+
                             switch (event.key.keysym.sym){
                                 case SDLK_m :
                                     SDL_RenderClear(rendu);
                                     affichageRendu("assets/menujeu.bmp",fenetre,rendu);
-                                    break;
                             }
                         }
                         case SDLK_SPACE :
