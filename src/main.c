@@ -45,8 +45,8 @@ int main(int argc, char **argv){
 
     }
     #endif
-    SDL_Menu();
-    /*jeu();*/
+    /*SDL_Menu();*/
+    jeu();
     return 0;
  
 }
