@@ -123,74 +123,146 @@ void tour(int id){
     }  
 }
 
-void tourOrdi(){
+void tourOrdi(int difficulte){
     //On considère que l'id de l'ordinateur doit être 2.
         int probCapa,mouv;
 
         mouv = meilleurMouv();
 
         if(mouv != 0){
-            //L'ordinateur a une chance sur 3 d'utiliser une capacité.
-            probCapa = rand()%3;
-            if(probCapa == 1){
-                //La capacité à utiliser est défini de manière pseudo-aléatoire.
-                int capa = alea(1,4);
-                useCapaOrdi(capa-1);
-            }
-            //50% de chances de réaliser le meilleur mouvement
-            int doMouv = rand()%4;
-            if(doMouv == 0 || doMouv == 1){
-                switch(mouv){
-                    case 1:
+            switch(difficulte){
+                case 2:
                     {
-                        avance(2);
-                        break;
-                    }
-                    case 2:
-                    {
-                        avance(2);
-                        break;
-                    }
-                    case 3:
-                    {
-                        /*
-                        * 0: tourner à gauche
-                        * 1: tourner à doite
-                        */
-                        int tourner = alea(0,1);
-                        if(tourner == 0){
-                            tourne(2,-1);
-                        } else {
-                            tourne(2,1);
+                        //L'ordinateur a une chance sur 3 d'utiliser une capacité.
+                        probCapa = rand()%3;
+                        if(probCapa == 1){
+                            //La capacité à utiliser est défini de manière pseudo-aléatoire.
+                            int capa = alea(1,4);
+                            useCapaOrdi(difficulte,capa-1);
                         }
-                        break;
-                    }
+                        //66% de chances de réaliser le meilleur mouvement
+                        int doMouv = rand()%3;
+                        if(doMouv == 0 || doMouv == 1){
+                            switch(mouv){
+                                case 1:
+                                    {
+                                        avance(2);
+                                    }
+                                    break;
+                                case 2:
+                                    {
+                                        avance(2);
+                                    }
+                                    break;
+                                case 3:
+                                    {
+                                        /*
+                                        * 0: tourner à gauche
+                                        * 1: tourner à doite
+                                        */
+                                        int tourner = alea(0,1);
+                                        if(tourner == 0){
+                                            tourne(2,-1);
+                                        } else {
+                                            tourne(2,1);
+                                        }
+                                        break;
+                                    }
 
-                }
-            }else{
-                //L'ordinateur a une chance sur 3 d'utiliser une capacité.
-                probCapa = rand()%3;
-                if(probCapa == 1){
-                //La capacité à utiliser est défini de manière pseudo-aléatoire.
-                int capa = alea(1,4);
-                useCapaOrdi(capa-1);
-                }
-            //On définit le mouvement à réaliser, 75% de chances d'avancer et 25% de chances de tourner.
-            mouv = rand()%4;
-            if(mouv >= 0 && mouv <= 2){
-                avance(2);
-                } else {
-                    /*
-                    * 0: tourner à gauche
-                    * 1: tourner à doite
-                    */
-                    int tourner = alea(0,1);
-                    if(tourner == 0){
-                        tourne(2,-1);
-                    } else {
-                        tourne(2,1);
+                            }
+                        }else{
+                            //L'ordinateur a une chance sur 3 d'utiliser une capacité.
+                            probCapa = rand()%3;
+                            if(probCapa == 1){
+                                //La capacité à utiliser est défini de manière pseudo-aléatoire.
+                                int capa = alea(1,4);
+                                useCapaOrdi(difficulte,capa-1);
+                            }
+                            //On définit le mouvement à réaliser, 75% de chances d'avancer et 25% de chances de tourner.
+                            mouv = rand()%4;
+                            if(mouv >= 0 && mouv <= 2){
+                                avance(2);
+                            } else {
+                                /*
+                                * 0: tourner à gauche
+                                * 1: tourner à doite
+                                */
+                                int tourner = alea(0,1);
+                                if(tourner == 0){
+                                    tourne(2,-1);
+                                } else {
+                                    tourne(2,1);
+                                }
+                            }
+                        }
                     }
-                }
+                    break;
+                case 3:
+                    {
+                        //L'ordinateur a une chance sur 3 d'utiliser une capacité.
+                        probCapa = rand()%2;
+                        if(probCapa == 1){
+                            //La capacité à utiliser est défini de manière pseudo-aléatoire.
+                            int capa = alea(1,4);
+                            useCapaOrdi(difficulte,capa-1);
+                        }
+                        //90% de chances de réaliser le meilleur mouvement
+                        int doMouv = rand()%10;
+                        if(doMouv >= 0 && doMouv <=8){
+                            switch(mouv){
+                                case 1:
+                                    {
+                                        avance(2);
+                                    }
+                                    break;
+                                case 2:
+                                    {
+                                        avance(2);
+                                    }
+                                    break;
+                                case 3:
+                                    {
+                                        /*
+                                        * 0: tourner à gauche
+                                        * 1: tourner à doite
+                                        */
+                                        int tourner = alea(0,1);
+                                        if(tourner == 0){
+                                            tourne(2,-1);
+                                        } else {
+                                            tourne(2,1);
+                                        }
+                                        break;
+                                    }
+
+                            }
+                        }else{
+                            //L'ordinateur a une chance sur 2 d'utiliser une capacité.
+                            probCapa = rand()%2;
+                            if(probCapa == 1){
+                                //La capacité à utiliser est défini de manière pseudo-aléatoire.
+                                int capa = alea(1,4);
+                                useCapaOrdi(difficulte,capa-1);
+                            }
+                            //On définit le mouvement à réaliser, 75% de chances d'avancer et 25% de chances de tourner.
+                            mouv = rand()%4;
+                            if(mouv >= 0 && mouv <= 2){
+                                avance(2);
+                            } else {
+                                /*
+                                * 0: tourner à gauche
+                                * 1: tourner à doite
+                                */
+                                int tourner = alea(0,1);
+                                if(tourner == 0){
+                                    tourne(2,-1);
+                                } else {
+                                    tourne(2,1);
+                                }
+                            }
+                        }
+                    }
+                    break;
             }
         } else {
             //L'ordinateur a une chance sur 3 d'utiliser une capacité.
@@ -198,11 +270,11 @@ void tourOrdi(){
             if(probCapa == 1){
                 //La capacité à utiliser est défini de manière pseudo-aléatoire.
                 int capa = alea(1,4);
-                useCapaOrdi(capa-1);
+                useCapaOrdi(difficulte,capa-1);
             }
             //On définit le mouvement à réaliser, 75% de chances d'avancer et 25% de chances de tourner.
             mouv = rand()%4;
-            if(mouv >= 0 && mouv <= 2){
+            if(mouv >= 0 && mouv <= 1){
                 avance(2);
             } else {
                 /*
@@ -315,34 +387,63 @@ int meilleurMouv(){
             return 3;
         }
     }
+
     //Si aucun joueur n'est proche alors aucun mouvement n'est meilleur qu'un autre.
     return 0;
 }
 
-int partieSolo(){
-    initTab();
-    bool gagne = false;
-    int cpJoueur = 0, idJoueur = 2;
-    while(!gagne){
-        if(idJoueur == 1){
-            idJoueur++;
-            tourOrdi();
-        } else {
-            idJoueur--;
-            tour(idJoueur);
-        }
-        for(int i = 0; i<SIZE; i++){
-            for(int j = 0; j<SIZE; j++){
-                if(t[i][j].joueurPresent){
-                    cpJoueur++;
+int partieSolo(int difficulte){
+    int idJoueur = 2;
+    if(difficulte == 2){
+        initTab();
+        bool gagne = false;
+        int cpJoueur = 0;
+        while(!gagne){
+            if(idJoueur == 1){
+                idJoueur++;
+                tourOrdi(difficulte);
+            } else {
+                idJoueur--;
+                tour(idJoueur);
+            }
+            for(int i = 0; i<SIZE; i++){
+                for(int j = 0; j<SIZE; j++){
+                    if(t[i][j].joueurPresent){
+                        cpJoueur++;
+                    }
                 }
             }
+            if(cpJoueur == 1){
+                gagne = true;
+            }
+            cpJoueur = 0;
         }
-        if(cpJoueur == 1){
-            gagne = true;
+    } else if(difficulte == 3){
+        initTabMurs();
+        bool gagne = false;
+        int cpJoueur = 0;
+        while(!gagne){
+            if(idJoueur == 1){
+                idJoueur++;
+                tourOrdi(difficulte);
+            } else {
+                idJoueur--;
+                tour(idJoueur);
+            }
+            for(int i = 0; i<SIZE; i++){
+                for(int j = 0; j<SIZE; j++){
+                    if(t[i][j].joueurPresent){
+                        cpJoueur++;
+                    }
+                }
+            }
+            if(cpJoueur == 1){
+                gagne = true;
+            }
+            cpJoueur = 0;
         }
-        cpJoueur = 0;
     }
+
     printf("\n");
     afficheGrid();
     printf("Victoire du joueur %d !", idJoueur);
@@ -367,7 +468,7 @@ void jeu(){
                 int score = 0;
                 do{
                     int result;
-                    result = partieSolo();
+                    result = partieSolo(choix);
                     if(result == 1){
                         score++;
                         if(score > highscore){
@@ -377,13 +478,30 @@ void jeu(){
                     }else{
                         score = 0;
                     }
-                    printf("\nVoulez vous rejouer ?\n1 - Oui\n2 - Non");
+                    printf("\nVoulez vous rejouer ?\n1 - Oui\n2 - Non\n");
                     scanf("%d", &choix);
                 }while(choix == 1);
             }
             break;
         case 3:
-            printf("Non implemente");
+            {
+                int score = 0;
+                do{
+                    int result;
+                    result = partieSolo(choix);
+                    if(result == 1){
+                        score++;
+                        if(score > highscore){
+                            ecritVal(score);
+                            highscore = score;
+                        }
+                    }else{
+                        score = 0;
+                    }
+                    printf("\nVoulez vous rejouer ?\n1 - Oui\n2 - Non\n");
+                    scanf("%d", &choix);
+                }while(choix == 1);
+            }
             break;
         default:
             printf("Veuillez saisir une valeur correcte.\n");

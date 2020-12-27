@@ -48,6 +48,83 @@ void initTab(){
     t[SIZE-1][0].joueurPresent = true;
 };
 
+void initTabMurs(){
+    //On met toutes les cases "vides"
+    for(int i = 0; i<SIZE; i++){
+        for(int j = 0; j<SIZE; j++){
+            t[i][j].joueurPresent = false;
+            t[i][j].murEst = false;
+            t[i][j].murNord = false;
+            t[i][j].murOuest = false;
+            t[i][j].murSud = false;
+            t[i][j].capa = NULL;
+        }
+    }
+    //On met les cases extérieures avec leurs murs
+    for(int i = 0; i<SIZE; i++){
+        t[i][0].murNord = true;
+        t[i][SIZE-1].murSud = true;
+        t[0][i].murOuest = true;
+        t[SIZE-1][i].murEst = true;
+    }
+
+    //Création des deux joueurs avec id et orientation
+    Joueur j1;
+    j1.id = 1;
+    j1.orientation = 0;
+    //Création de la liste de capacités du joueur 1
+    j1.capacite = creaListe();
+
+    Joueur j2;
+    j2.id = 2;
+    j2.orientation = 2;
+    j2.capacite = creaListe();
+
+    srand(time(NULL));
+    for(int i = 1;i<SIZE-1;i++){
+        for(int j = 1;j<SIZE-1;j++){
+            int probaMur = rand()%4;
+
+            if(probaMur == 0){
+                t[i][j].murNord = true;
+            } else if(probaMur == 1){
+                t[i][j].murEst = true;
+            } else if(probaMur == 2){
+                t[i][j].murSud = true;
+            } else if(probaMur == 3){
+                t[i][j].murOuest = true;
+            }
+
+            if(t[i][j].murNord){
+                t[i-1][j].murSud = true;
+            }
+            if(t[i][j].murEst){
+                t[i][j+1].murOuest = true;
+            }
+            if(t[i][j].murSud){
+                t[i+1][j].murNord = true;
+            }
+            if(t[i][j].murOuest){
+                t[i][j-1].murEst = true;
+            }
+        }
+    }
+
+    //Placement des joueurs sur la carte
+    t[0][SIZE-1].joueur = j1;
+    t[0][SIZE-1].joueurPresent = true;
+    t[0][SIZE-1].murNord = false;
+    t[0][SIZE-1].murEst = false;
+    t[0][SIZE-2].murSud = false;
+    t[1][SIZE-1].murOuest = false;
+    t[SIZE-1][0].joueur = j2;
+    t[SIZE-1][0].joueurPresent = true;
+    t[SIZE-1][0].murSud = false;
+    t[SIZE-1][0].murOuest = false;
+    t[SIZE-1][1].murNord = false;
+    t[SIZE-2][0].murEst = false;
+}
+
 /*
 *   Fonction qui permet de renvoyer une liste de capacité pleine en début de partie.
 */
@@ -513,7 +590,7 @@ void useCapa(int id, int n){
     }
 }
 
-void useCapaOrdi(int n){
+void useCapaOrdi(int difficulte,int n){
     bool possible = false;
     switch(n){
         case 0: //Création d'un mur
@@ -690,7 +767,7 @@ void useCapaOrdi(int n){
                     }
                 }
                 if(possible){
-                    tourOrdi();
+                    tourOrdi(difficulte);
                 } else {
                     printf("La capacité du bot a échoué\n");
                 }
