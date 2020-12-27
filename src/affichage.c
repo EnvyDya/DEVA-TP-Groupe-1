@@ -108,21 +108,19 @@ void SDL_Menu(){
                         case SDLK_1 :{
                             SDL_RenderClear(rendu);
                             affichageRendu("assets/reglesjeu.bmp",fenetre,rendu);
-                            SDL_Event event2;
                             bool retour = false;
                             do {
-                                while(SDL_PollEvent (&event2)){
+                                while(SDL_PollEvent (&event)){
                                     switch (event.key.keysym.sym){
                                         case SDLK_m :
                                             retour=true;
 
                                         case SDLK_ESCAPE :
                                             retour=true;
-                                            stop = true;
 
                                         case SDL_QUIT :
                                             retour = true;
-                                            stop = true;
+
                                     }
                                 }
                             }while(!retour);
@@ -131,7 +129,25 @@ void SDL_Menu(){
                         }
                         case SDLK_p :
                             SDL_RenderClear(rendu);
-                            affichageRendu("assets/modesjeu.bmp",fenetre, rendu);
+                            affichageRendu("assets/modesjeu.bmp",fenetre,rendu);
+                            bool retour = false;
+                            do {
+                                while(SDL_PollEvent (&event)){
+                                    switch (event.key.keysym.sym){
+                                        case SDLK_m :
+                                            retour=true;
+
+                                        case SDLK_ESCAPE :
+                                            retour=true;
+
+                                        case SDL_QUIT :
+                                            retour = true;
+                                    }
+                                }
+                            }while(!retour);
+                            SDL_RenderClear(rendu);
+                            affichageRendu("assets/menujeu.bmp",fenetre,rendu);
+                            bool stop = false;
                     }   
                 }   
             }
