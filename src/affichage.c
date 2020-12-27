@@ -100,7 +100,7 @@ void SDL_Menu(){
                 case SDL_QUIT :
                     stop = true;
                 
-                case SDL_KEYDOWN :
+                case SDL_KEYDOWN :{
                     switch (event.key.keysym.sym){
                         case SDLK_ESCAPE :
                             stop = true;
@@ -108,17 +108,32 @@ void SDL_Menu(){
                         case SDLK_1 :{
                             SDL_RenderClear(rendu);
                             affichageRendu("assets/reglesjeu.bmp",fenetre,rendu);
+                            SDL_Event event2;
+                            bool retour = false;
+                            do {
+                                while(SDL_PollEvent (&event2)){
+                                    switch (event.key.keysym.sym){
+                                        case SDLK_m :
+                                            retour=true;
 
-                            switch (event.key.keysym.sym){
-                                case SDLK_m :
-                                    SDL_RenderClear(rendu);
-                                    affichageRendu("assets/menujeu.bmp",fenetre,rendu);
-                            }
+                                        case SDLK_ESCAPE :
+                                            retour=true;
+                                            stop = true;
+
+                                        case SDL_QUIT :
+                                            retour = true;
+                                            stop = true;
+                                    }
+                                }
+                            }while(!retour);
+                            SDL_RenderClear(rendu);
+                            affichageRendu("assets/menujeu.bmp",fenetre,rendu);
                         }
-                        case SDLK_SPACE :
+                        case SDLK_p :
                             SDL_RenderClear(rendu);
                             affichageRendu("assets/modesjeu.bmp",fenetre, rendu);
-                    }
+                    }   
+                }   
             }
         }   
     }
