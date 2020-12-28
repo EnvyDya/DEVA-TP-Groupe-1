@@ -1,6 +1,9 @@
 #include "affichage.h"
 #include <stdio.h>
 #include <stdbool.h>
+#include "bouge.h"
+#include "alea.h"
+#include "partie.h"
 
 //Je crée une fonction qui va me permettre d'entrer un message d'erreur
 
@@ -137,6 +140,15 @@ void SDL_Menu(){
                                         case SDLK_m :
                                             retour=true;
 
+                                        case SDLK_0: //Jeu solo choisi
+                                            switch(event.key.keysym.sym){
+                                                case SDLK_2 :
+                                                    partiesolo(2);
+                                                case SDLK_3 :
+                                                    partiesolo(3);
+                                            }
+                                        case SDLK_2 ://Jeu multi choisi
+                                            partie();
                                         case SDLK_ESCAPE :
                                             retour=true;
 
@@ -154,4 +166,126 @@ void SDL_Menu(){
         }   
     }
     while(!stop);
+}
+int SDL_partieSolo(int difficulte){
+    int idJoueur = 2;
+    if(difficulte == 2){
+        initTab();
+        bool gagne = false;
+        int cpJoueur = 0;
+        while(!gagne){
+            if(idJoueur == 1){
+                idJoueur++;
+                tourOrdi(difficulte);
+            } else {
+                idJoueur--;
+                tour(idJoueur);
+            }
+            for(int i = 0; i<SIZE; i++){
+                for(int j = 0; j<SIZE; j++){
+                    if(t[i][j].joueurPresent){
+                        cpJoueur++;
+                    }
+                }
+            }
+            if(cpJoueur == 1){
+                gagne = true;
+            }
+            cpJoueur = 0;
+        }
+    } else if(difficulte == 3){
+        initTabMurs();
+        bool gagne = false;
+        int cpJoueur = 0;
+        while(!gagne){
+            if(idJoueur == 1){
+                idJoueur++;
+                tourOrdi(difficulte);
+            } else {
+                idJoueur--;
+                tour(idJoueur);
+            }
+            for(int i = 0; i<SIZE; i++){
+                for(int j = 0; j<SIZE; j++){
+                    if(t[i][j].joueurPresent){
+                        cpJoueur++;
+                    }
+                }
+            }
+            if(cpJoueur == 1){
+                gagne = true;
+            }
+            cpJoueur = 0;
+        }
+    }
+
+    afficheGrid();
+    switch (idJoueur){
+        case 1 :
+            affichageRendu("victoirejoueur1.bmp",&fenetre,&rendu);
+        case 2 :
+            affichageRendu("victoirejoueur2.bmp",&fenetre,&rendu);
+    }
+    return idJoueur;
+}
+
+void SDL_afficheGrid(){
+    for(int i = 0; i<SIZE; i++){
+        affichageRendu("ecranjeu.bmp",fenetre,rendu);
+        //Pour chaque case on teste s'il y a un mur/un joueur ou non
+        for(int j = 0; j<SIZE; j++){
+            if(t[j][i].joueurPresent){
+                if(t[j][i].joueur.orientation == 0){
+                    if(t[j][i].joueur.id == 1){
+                        affichageRenduCoordonnees("sumotoridosbleu.bmp",fenetre,rendu,);
+                    }else{
+                        affichageRenduCoordonnees("sumotoridosrouge.bmp",fenetre,rendu,);
+                    }
+                    printf("^");
+                }else if(t[j][i].joueur.orientation == 1){
+                    if(t[j][i].joueur.id == 1){
+                        affichageRenduCoordonnees("sumotoriestbleu.bmp",fenetre,rendu,x,y);
+                    }else{
+                        affichageRenduCoordonnees("sumotoriestrouge.bmp",fenetre,rendu,x,y);
+                    }
+                    printf(">");
+                }else if(t[j][i].joueur.orientation == 2){
+                    if(t[j][i].joueur.id == 1){
+                        affichageRenduCoordonnees("sumotorifacebleu.bmp",fenetre,rendu,x,y);
+                    }else{
+                        affichageRenduCoordonnees("sumotorifacerouge.bmp",fenetre,rendu,x,y);
+                    }
+                    printf("v");
+                }else if(t[j][i].joueur.orientation == 3){
+                    if(t[j][i].joueur.id == 1){
+                        affichageRenduCoordonnees("sumotoriouestbleu.bmp",fenetre,rendu,x,y);
+                    }else{
+                        affichageRenduCoordonnees("sumotoriouestrouge.bmp",fenetre,rendu,x,y);
+                    }
+                    printf("<");
+                }
+            }else if(t[j][i].capa != NULL){
+                affichageRenduCoordonnees("capa.bmp",fenetre,rendu,x,y);
+            }
+            else{
+                printf(" ");
+            }
+            if(t[j][i].murEst){
+                printf("|");
+            }else{
+                printf(" ");
+            }
+        }
+        //Même chose pour les murs sud
+        printf("  ");
+        for(int j = 0; j<SIZE; j++){
+            if(t[j][i].murSud == true){
+                printf("---");
+            }else{
+                printf("   ");
+            }
+        }
+        printf("\n");
+    }
+    printf("\n");
 }
