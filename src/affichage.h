@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL.h>
+#include <SDL_ttf.h>
 
 #define Largeur 1280
 #define Hauteur 720
