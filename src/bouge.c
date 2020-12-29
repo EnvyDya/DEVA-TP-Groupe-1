@@ -80,7 +80,6 @@ void initTabMurs(){
     j2.orientation = 2;
     j2.capacite = creaListe();
 
-    srand(time(NULL));
     for(int i = 1;i<SIZE-1;i++){
         for(int j = 1;j<SIZE-1;j++){
             int probaMur = rand()%4;
