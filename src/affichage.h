@@ -21,15 +21,21 @@
 
     void affichageRendu(char* cheminImage, SDL_Window *fenetre, SDL_Renderer *rendu);
 
-    void affichageRenduCoordonnees(char* cheminImage, SDL_Window *fenetre, SDL_Window *rendu, int x, int y);
+    void affichageRenduCoordonnees(char* cheminImage, SDL_Window *fenetre, SDL_Renderer *rendu, int x, int y);
 
     void SDL_affichageTexte(char* texte, SDL_Window *fenetre, SDL_Renderer *rendu, int x, int y);
 
     int SDL_partieSolo(int difficulte, SDL_Window *fenetre, SDL_Renderer *rendu);
 
+    int SDL_partie(SDL_Window *fenetre, SDL_Renderer *rendu);
+
     void SDL_afficheGrid(SDL_Window *fenetre, SDL_Renderer *rendu);
 
-    bool SDL_avance(int id);
+    bool SDL_avance(int id, SDL_Window *fenetre, SDL_Renderer *rendu);
+
+    void SDL_tour(int id, SDL_Window *fenetre, SDL_Renderer *rendu);
+
+    void SDL_useCapa(int id, int n, SDL_Window *fenetre, SDL_Renderer *rendu);
     //Cette fonction permet d'afficher le menu du jeu
     void SDL_Menu();
 #endif
