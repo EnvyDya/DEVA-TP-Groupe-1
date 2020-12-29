@@ -1,6 +1,7 @@
 #include "partie.h"
 #include "affichage.h"
 #include <SDL.h>
+#include "SDL_ttf.h"
 
 int main(int argc, char **argv){
     #if 0
@@ -45,8 +46,8 @@ int main(int argc, char **argv){
 
     }
     #endif
-    /*SDL_Menu();*/
-    jeu();
+    SDL_Menu();
+    //jeu();
     return 0;
  
 }
