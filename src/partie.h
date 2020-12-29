@@ -31,7 +31,10 @@ void tourOrdi(int difficulte);
 * La fonction possède la même structure que partie() mais met en place un joueur contre l'"ordinateur".
 */
 int partieSolo(int difficulte);
-
+/*
+* Fonction qui détermine le meilleur mouvement faisable par le bot
+*/
+int meilleurMouv();
 
 /*
 * Fonction qui gère le jeu complet
@@ -47,7 +50,8 @@ void ecritVal(int e);
 /*
 * Fonction qui lit un entier dans le fichier save
 */
-
 int litVal();
+
+
 
 #endif
