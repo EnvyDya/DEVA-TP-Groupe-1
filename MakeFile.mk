@@ -1,4 +1,4 @@
-BIN=TachiAi.exe
+BIN=bin/TachiAi.exe
 OBJECTS=src/main.o src/bouge.o src/affichage.o src/alea.o src/partie.o
 CC=gcc
 CFLAGS=-I include -L lib -lmingw32 -lSDL2main -lSDL2
