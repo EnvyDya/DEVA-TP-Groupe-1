@@ -453,11 +453,13 @@ int partieSolo(int difficulte){
 void jeu(){
     printf("Bienvenue dans Tachi-Ai!\nQue voulez vous faire ?\n1 - Jeu multi\n2 - Jeu solo (facile)\n3 - Jeu solo (moins facile)\n");
     int choix, highscore;
+    //On récupère la valeur sauvegardée dans le fichier
     highscore = litVal();
     scanf("%d", &choix);
     switch(choix){
         case 1:
             do{ 
+                //On lance une partie multijoueur
                 partie();
                 printf("\nVoulez vous rejouer ?\n1 - Oui\n2 - Non\n");
                 scanf("%d", &choix);
@@ -465,19 +467,25 @@ void jeu(){
             break;
         case 2:
             {
+                //On initialise le score à 0 en début de partie
                 int score = 0;
                 int choix2;
                 do{
+                    //On écrit le score actuel ainsi que le highscore
                     printf("Score : %d\nHighscore : %d\n", score, highscore);
                     int result;
+                    //On lance une partie et on stocke le resultat dans le score;
                     result = partieSolo(choix);
                     if(result == 1){
+                        //Si c'est le joueur 1, alors on augmente le score
                         score++;
+                        //On compare le score au highscore et on sauvegarde le cas échéant
                         if(score > highscore){
                             ecritVal(score);
                             highscore = score;
                         }
                     }else{
+                        //Si le joueur a perdu, on remet le score à 0
                         score = 0;
                     }
                     printf("\nVoulez vous rejouer ?\n1 - Oui\n2 - Non\n");
@@ -487,6 +495,7 @@ void jeu(){
             break;
         case 3:
             {
+                //Même principe que pour le mode solo facile
                 int score = 0;
                 int choix2;
                 do{
@@ -513,19 +522,25 @@ void jeu(){
 }
 
 void ecritVal(int e){
+    //On ouvre le fichier en écriture
     FILE *save;
     save = fopen("bin/save.txt", "w");
+    //On écrit la valeur dans le fichier
     fprintf(save, "%d", e);
+    //On ferme le fichier
     fclose(save);   
 }
 
 int litVal(){
+    //On ouvre le fichier en lecture
     FILE *save;
     int highscore;
     save = fopen("bin/save.txt", "r");
     if(save == NULL){
+        //S'il est vide, alors aucune partie n'a été jouée
         return 0;
     }
+    //Sinon on le lit et on retourne la valeur après avoir fermé le fichier
     fscanf(save,"%d", &highscore);
     fclose(save); 
     return highscore;
