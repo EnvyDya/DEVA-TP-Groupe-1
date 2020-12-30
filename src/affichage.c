@@ -33,7 +33,7 @@ void SDL_Pause_Fenetre(void){
     }
     while (!stop);
 }
-
+//Fonction permettant de créer un rendu en plein écran en partant d'une image de 1280x720.
 void affichageRendu(char* cheminImage, SDL_Window *fenetre, SDL_Renderer *rendu){
     SDL_Surface *surfaceMenu = NULL;
     SDL_Texture *textureMenu = NULL;
@@ -58,6 +58,7 @@ void affichageRendu(char* cheminImage, SDL_Window *fenetre, SDL_Renderer *rendu)
         SDL_ExitErrorWindowRender("Erreur pendant le chargement de la texture", fenetre, rendu);
     }
 
+    //Coordonnées du rectangle qui contiendra la texture, de manière à ce qu'elle soit en plein écran.
     rectangleMenu.x = (Largeur - rectangleMenu.w)/2;
     rectangleMenu.y = (Hauteur - rectangleMenu.h)/2;
     
@@ -68,7 +69,7 @@ void affichageRendu(char* cheminImage, SDL_Window *fenetre, SDL_Renderer *rendu)
     //Rendu :
     SDL_RenderPresent(rendu);
 }
-
+//Fonction permettant d'afficher un rendu à des coordonnées précises
 void affichageRenduCoordonnees(char* cheminImage, SDL_Window *fenetre, SDL_Renderer *rendu, int x, int y){
     SDL_Surface *surfaceMenu = NULL;
     SDL_Texture *textureMenu = NULL;
@@ -93,6 +94,7 @@ void affichageRenduCoordonnees(char* cheminImage, SDL_Window *fenetre, SDL_Rende
         SDL_ExitErrorWindowRender("Erreur pendant le chargement de la texture", fenetre, rendu);
     }
 
+    //Affectation des coordonnées à celle du rectangle qui contiendra la texture voulue.
     rectangleMenu.x = x;
     rectangleMenu.y = y;
     
@@ -103,12 +105,42 @@ void affichageRenduCoordonnees(char* cheminImage, SDL_Window *fenetre, SDL_Rende
     //Rendu :
     SDL_RenderPresent(rendu);
 }
+//Ne fonctionne pas. Initialement pour créer un rendu permettant d'afficher un texte.
+/*void SDL_affichageTexte(char* texte, SDL_Window *fenetre, SDL_Renderer *rendu, int x, int y){
+    TTF_Font *police = NULL;
+    SDL_Color couleurNoire = {0, 0, 0};
+    SDL_Surface *ecrire = TTF_RenderText_Solid(police,texte,couleurNoire);
+    SDL_Texture *textureEcriture=NULL;
 
-void SDL_affichageTexte(char* texte, SDL_Window *fenetre, SDL_Renderer *rendu, int x, int y){
+    if(TTF_Init() == -1)
+    {
+        fprintf(stderr, "Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
+        exit(EXIT_FAILURE);
+    }
 
+    textureEcriture = SDL_CreateTextureFromSurface(rendu,ecrire);
+    SDL_FreeSurface(ecrire);
+
+    SDL_Rect position;
+
+    if(SDL_QueryTexture(textureEcriture, NULL, NULL, &position.w,&position.h)!=0){
+        SDL_ExitErrorWindowRender("Erreur pendant le chargement de la texture", fenetre, rendu);
+    }
+
+    position.x = x;
+    position.y = y;
+   
+       if(SDL_RenderCopy(rendu, textureEcriture, NULL, &position)!=0){
+        SDL_ExitErrorWindowRender("Erreur lors de l'affichage des textures", fenetre, rendu);
+    }
+    //Rendu :
+    SDL_RenderPresent(rendu);
 }
+*/
 
-
+/*Cette fonction est le corps de l'affichage SDL. En effet, elle permet d'initialiser l'écran, et d'afficher les rendus
+* du jeu. Dans cette fonction se trouvent les choix permettant de commencer une partie. C'est la seule fonction nécessaire
+* dans le main pour faire fonctionner l'interface graphique du jeu.*/
 void SDL_Menu(){
     //Pointeurs à déclarer :
     SDL_Window *fenetre = NULL; 
@@ -244,7 +276,7 @@ void SDL_Menu(){
     }while(!stop);
 }
 
-
+//Equivalent SDL de partieSolo. Elle affiche l'écran de victoire et utilise les fonctions SDL_tour et SDL_tourOrdi.
 int SDL_partieSolo(int difficulte, SDL_Window *fenetre, SDL_Renderer *rendu){
     int idJoueur = 2;
     if(difficulte == 2){
@@ -308,7 +340,7 @@ int SDL_partieSolo(int difficulte, SDL_Window *fenetre, SDL_Renderer *rendu){
     }
     return idJoueur;
 }
-
+//Fonction traduite en SDL de afficheGrid. Elle affiche les joueurs sur la grille, ainsi que les murs et les capacités.
 void SDL_afficheGrid(SDL_Window *fenetre, SDL_Renderer *rendu){
     int ac1 = 0, ac2 = 0, ac3 = 0, ac4 = 0, bc1=0, bc2=0, bc3=0 ,bc4=0;
     affichageRendu("assets/ecranjeu.bmp",fenetre,rendu);
@@ -415,16 +447,16 @@ void SDL_afficheGrid(SDL_Window *fenetre, SDL_Renderer *rendu){
             }
         }
     }
-/*        SDL_affichageTexte(": " + (char)(ac1+48)), fenetre, rendu, 190, 210);
-        SDL_affichageTexte(": " + (char)(ac2+48)), fenetre, rendu, 190, 210);
-        SDL_affichageTexte(": " + (char)(ac3+48)), fenetre, rendu, 190, 210);
-        SDL_affichageTexte(": " + (char)(ac4+48)), fenetre, rendu, 190, 210);
-        SDL_affichageTexte(": " + (char)(bc1+48)), fenetre, rendu, 190, 1120);
-        SDL_affichageTexte(": " + (char)(bc2+48)), fenetre, rendu, 190, 1120);
-        SDL_affichageTexte(": " + (char)(bc3+48)), fenetre, rendu, 190, 1120);
-        SDL_affichageTexte(": " + (char)(bc4+48)), fenetre, rendu, 190, 1120);*/
+/*        SDL_affichageTexte(": " + (char)(ac1+48), fenetre, rendu, 190, 210);
+        SDL_affichageTexte(": " + (char)(ac2+48), fenetre, rendu, 190, 210);
+        SDL_affichageTexte(": " + (char)(ac3+48), fenetre, rendu, 190, 210);
+        SDL_affichageTexte(": " + (char)(ac4+48), fenetre, rendu, 190, 210);
+        SDL_affichageTexte(": " + (char)(bc1+48), fenetre, rendu, 190, 1120);
+        SDL_affichageTexte(": " + (char)(bc2+48), fenetre, rendu, 190, 1120);
+        SDL_affichageTexte(": " + (char)(bc3+48), fenetre, rendu, 190, 1120);
+        SDL_affichageTexte(": " + (char)(bc4+48), fenetre, rendu, 190, 1120);*/
 }
-
+//Traduction de la fonction avance en SDL. Initialement prévue pour l'affichage d'un texte signalant le ramassage d'une capacité
 bool SDL_avance(int id, SDL_Window *fenetre, SDL_Renderer *rendu){
     //On crée un posX et posY permettant de stocker l'emplacement du joueur
     int posX = 0, posY = 0;
@@ -455,7 +487,7 @@ bool SDL_avance(int id, SDL_Window *fenetre, SDL_Renderer *rendu){
             //Test si une capacité est sur la nouvelle case
             if(t[posX][posY-1].capa != NULL){
                 capacite *capa = t[posX][posY-1].capa;
-                //printf("Capacite %d ramassee !\n", capa->type+1);           /*A traduire en SDl*/
+                //SDL_affichageTexte("Capacité ramassée !" + (char)(capa->type+1),fenetre,rendu,440,15);
                 t[posX][posY-1].capa = NULL;
                 capacite *courant = t[posX][posY-1].joueur.capacite.p;
                 //On se place à la fin de la liste de capacité du joueur
@@ -480,7 +512,7 @@ bool SDL_avance(int id, SDL_Window *fenetre, SDL_Renderer *rendu){
             //Test si une capacité est sur la nouvelle case
             if(t[posX+1][posY].capa != NULL){
                 capacite *capa = t[posX+1][posY].capa;
-                //printf("Capacite %d ramassee !\n", capa->type+1);                   /* A traduire en SDL*/
+                //SDL_affichageTexte("Capacité ramassée !" + (char)(capa->type+1),fenetre,rendu,440,15);
                 t[posX+1][posY].capa = NULL;
                 capacite *courant = t[posX+1][posY].joueur.capacite.p;
                 //On se place à la fin de la liste de capacité du joueur
@@ -504,7 +536,7 @@ bool SDL_avance(int id, SDL_Window *fenetre, SDL_Renderer *rendu){
             //Test si une capacité est sur la nouvelle case
             if(t[posX][posY+1].capa != NULL){
                 capacite *capa = t[posX][posY+1].capa;
-                //printf("Capacite %d ramassee !\n", capa->type+1);               /*A traduire en SDL*/
+                //SDL_affichageTexte("Capacité ramassée !" + (char)(capa->type+1),fenetre,rendu,440,15);
                 t[posX][posY+1].capa = NULL;
                 capacite *courant = t[posX][posY+1].joueur.capacite.p;
                 //On se place à la fin de la liste de capacité du joueur
@@ -527,7 +559,7 @@ bool SDL_avance(int id, SDL_Window *fenetre, SDL_Renderer *rendu){
             //Test si une capacité est sur la nouvelle case
             if(t[posX-1][posY].capa != NULL){
                 capacite *capa = t[posX-1][posY].capa;
-                //printf("Capacite %d ramassee !\n", capa->type+1);                           /*A traduire en SDL*/
+                //SDL_affichageTexte("Capacité ramassée !" + (char)(capa->type+1),fenetre,rendu,440,15);
                 t[posX-1][posY].capa = NULL;
                 capacite *courant = t[posX-1][posY].joueur.capacite.p;
                 //On se place à la fin de la liste de capacité du joueur
@@ -544,7 +576,7 @@ bool SDL_avance(int id, SDL_Window *fenetre, SDL_Renderer *rendu){
         break;
     }
 }
-
+//Voici la version SDL de la fonction tour. Les scanf ont été remplacés par des cas de saisie au clavier concernant les choix.
 void SDL_tour(int id, SDL_Window *fenetre, SDL_Renderer *rendu){
     //On affiche la grille au début du tour.
     SDL_afficheGrid(fenetre,rendu);
@@ -576,29 +608,29 @@ void SDL_tour(int id, SDL_Window *fenetre, SDL_Renderer *rendu){
                                     break;
                                 }
                                             
-                                case SDLK_o:{
+                                case SDLK_o:{//Oui à l'utilisation d'une capacité
                                     SDL_RenderClear(rendu);
                                     while(SDL_PollEvent (&event)){
                                         switch(event.key.keysym.sym){
-                                            case SDLK_1:
+                                            case SDLK_1://Mur
                                                 SDL_afficheGrid(fenetre,rendu);
                                                 SDL_useCapa(1, capa-1,fenetre,rendu);
                                                 retour = true;
                                                 break;
                                                         
-                                            case SDLK_2:
+                                            case SDLK_2://Reculer
                                                 SDL_afficheGrid(fenetre,rendu);
                                                 SDL_useCapa(2, capa-1,fenetre,rendu);
                                                 retour=true;
                                                 break;
                                                         
-                                            case SDLK_3:
+                                            case SDLK_3://Demi-tour
                                                 SDL_afficheGrid(fenetre,rendu);
                                                 SDL_useCapa(3, capa-1,fenetre,rendu);
                                                 retour=true;
                                                 break;
                                                         
-                                            case SDLK_4:
+                                            case SDLK_4://Rejouer un tour
                                                 SDL_afficheGrid(fenetre,rendu);
                                                 SDL_useCapa(4, capa-1,fenetre,rendu);
                                                 retour=true;
@@ -618,7 +650,7 @@ void SDL_tour(int id, SDL_Window *fenetre, SDL_Renderer *rendu){
                                     }
                                 }
 
-                                case SDLK_n : {
+                                case SDLK_n : {//Non à la capacité
                                     retour=true;
                                     break;
                                 }
@@ -638,21 +670,21 @@ void SDL_tour(int id, SDL_Window *fenetre, SDL_Renderer *rendu){
 
                                 case SDL_KEYDOWN:{
                                     switch(event.key.keysym.sym){
-                                        case SDLK_z:
+                                        case SDLK_z://Avancer
                                             SDL_RenderClear(rendu);
                                             SDL_avance(id,fenetre,rendu);
                                             SDL_afficheGrid(fenetre,rendu);
                                             retour=true;
                                             break;
                                                 
-                                        case SDLK_q:
+                                        case SDLK_q://Pivoter à gauche
                                             SDL_RenderClear(rendu);
                                             tourne(id, -1);
                                             SDL_afficheGrid(fenetre,rendu);
                                             retour=true;
                                             break;
 
-                                        case SDLK_d:
+                                        case SDLK_d://Pivoter à droite
                                             SDL_RenderClear(rendu);
                                             tourne(id,1);
                                             SDL_afficheGrid(fenetre,rendu);
@@ -697,7 +729,7 @@ void SDL_tour(int id, SDL_Window *fenetre, SDL_Renderer *rendu){
         }  
     }while(!stop);
 }
-
+//Voici la version SDL de la fonction partie, qui va afficher les écrans de victoire et utiliser les fonctions SDL de jeu.
 int SDL_partie(SDL_Window *fenetre, SDL_Renderer *rendu){
     //On fait un tableau neuf au début d'une partie
     initTab();
@@ -734,7 +766,8 @@ int SDL_partie(SDL_Window *fenetre, SDL_Renderer *rendu){
     }
     return idJoueur;
 }
-
+/*Voici la version SDL de la fonction useCapa, dans laquelle les choix des scanf ont été remplacés par des évènements
+* au clavier (appui sur une touche). */
 void SDL_useCapa(int id, int n, SDL_Window *fenetre, SDL_Renderer *rendu){
     bool possible = false;
     switch (n)
@@ -767,12 +800,12 @@ void SDL_useCapa(int id, int n, SDL_Window *fenetre, SDL_Renderer *rendu){
                         }
                     }
                 }
-            }
+            }//Si la création du mur est possible, alors on peut le placer sur la grille
             if(possible){
                 int posY, posX;
                 bool stop = false;
                 SDL_Event event;
-                //SDL_affichageTexte("Entrez une lettre entre a et f",fenetre,rendu,440,15);
+                //SDL_affichageTexte("Entrez une lettre entre a et f",fenetre,rendu,440,15);     /Ne fonctionne pas. cf. SDL_affichageTexte
                 do{
                     while (SDL_PollEvent (&event)){
                         switch (event.type){
@@ -857,7 +890,6 @@ void SDL_useCapa(int id, int n, SDL_Window *fenetre, SDL_Renderer *rendu){
                 }while(!stop);
                 SDL_RenderClear(rendu);
                 SDL_afficheGrid(fenetre,rendu);
-                //On va maintenant convertir la lettre en chiffre correspondant à la case
                 //SDL_affichageTexte("Entrez l'orientation du mur",fenetre,rendu,440,15);
                 do{
                     while (SDL_PollEvent (&event)){
@@ -1028,6 +1060,7 @@ void SDL_useCapa(int id, int n, SDL_Window *fenetre, SDL_Renderer *rendu){
     }
 }
 
+//Voici la version SDL de la fonction SDL_tourOrdi qui va utiliser les fonctions traduites en SDL 
 void SDL_tourOrdi(int difficulte,SDL_Window *fenetre, SDL_Renderer *rendu){
     //On considère que l'id de l'ordinateur doit être 2.
         int probCapa,mouv;
@@ -1210,7 +1243,7 @@ void SDL_tourOrdi(int difficulte,SDL_Window *fenetre, SDL_Renderer *rendu){
         t[posX][posY].capa = capa;
         }
 }
-
+//Voici la version SDL de la fonction useCapaOrdi, qui va utiliser les versions SDL des fonctions avance et tourOrdi.
 void SDL_useCapaOrdi(int difficulte,int n,SDL_Window *fenetre,SDL_Renderer *rendu){
     bool possible = false;
     switch(n){
