@@ -651,7 +651,7 @@ void useCapaOrdi(int difficulte,int n){
                             break;
                     }
                 } else {
-                    printf("La capacité du bot a échoué\n");
+                    printf("La capacite du bot a echoue\n");
                 }
                 break;
         }
@@ -698,7 +698,7 @@ void useCapaOrdi(int difficulte,int n){
                     }
                 }
             } else {
-                printf("La capacité du bot a échoué\n");
+                printf("La capacite du bot a echoue\n");
             }
             break;
         }    
@@ -734,7 +734,7 @@ void useCapaOrdi(int difficulte,int n){
                     }
                 }
                 if(!possible){
-                    printf("La capacité du bot a échoué\n");
+                    printf("La capacite du bot a echoue\n");
                 }
                 break;
         }
@@ -768,7 +768,7 @@ void useCapaOrdi(int difficulte,int n){
                 if(possible){
                     tourOrdi(difficulte);
                 } else {
-                    printf("La capacité du bot a échoué\n");
+                    printf("La capacite du bot a echoue\n");
                 }
                 break;
         }
