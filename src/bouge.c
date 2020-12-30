@@ -1,5 +1,6 @@
 #include "bouge.h"
 #include "partie.h"
+#include "alea.h"
 
 /*
 *   Le tableau est de la forme : t[abscisse][ordonnées].

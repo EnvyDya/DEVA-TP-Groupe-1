@@ -4,4 +4,4 @@ TP de DEVA portant sur le jeu vidéo
 Toute ressemblance avec des personnes réelles serait purement fortuite.
 
 Ce jeu peut se jouer en mode Solo ou Multijoueur.
-Ce jeu utilise la bibliothèque SDL2.
+Ce jeu utilise la bibliothèque SDL2 ainsi que la bibliothèque SDL_ttf.
