@@ -83,7 +83,7 @@ void tour(int id){
                 }
         }
     }
-        printf("Liste des capacites :\n1 - Poser un mur (Dispo : %d)\n2 - Reculer l'adversaire (Dispo : %d)\n3 - Demi-tour (Dispo : %d)\n4 - 2 tours (Dispo : %d)\nQue voulez vous faire ? ", c1, c2, c3, c4);
+        printf("Liste des capacites :\n1 - Poser un mur (Dispo : %d)\n2 - Reculer l'adversaire (Dispo : %d)\n3 - Demi-tour (Dispo : %d)\n4 - 2 tours (Dispo : %d)\nQue voulez vous faire ? \n", c1, c2, c3, c4);
         do{
             scanf("%d", &capa);
         }while(capa != 1 && capa != 2 && capa != 3 && capa != 4);
@@ -93,7 +93,7 @@ void tour(int id){
     }
 
     //Passage à la gestion classique du tour
-    printf("Liste des actions possibles :\nZ - Avancer\nQ - Tourner a gauche\nD - Tourner a droite\nQue voulez vous faire ? ");
+    printf("Liste des actions possibles :\nZ - Avancer\nQ - Tourner a gauche\nD - Tourner a droite\nQue voulez vous faire ? \n");
     do{
         //z = 122, Z = 90, q = 113, Q = 81, d = 100, D = 68
         scanf(" %c", &choix);
@@ -466,7 +466,9 @@ void jeu(){
         case 2:
             {
                 int score = 0;
+                int choix2;
                 do{
+                    printf("Score : %d\nHighscore : %d\n", score, highscore);
                     int result;
                     result = partieSolo(choix);
                     if(result == 1){
@@ -479,14 +481,16 @@ void jeu(){
                         score = 0;
                     }
                     printf("\nVoulez vous rejouer ?\n1 - Oui\n2 - Non\n");
-                    scanf("%d", &choix);
-                }while(choix == 1);
+                    scanf("%d", &choix2);
+                }while(choix2 == 1);
             }
             break;
         case 3:
             {
                 int score = 0;
+                int choix2;
                 do{
+                    printf("Score : %d\nHighscore : %d\n", score, highscore);
                     int result;
                     result = partieSolo(choix);
                     if(result == 1){
@@ -499,8 +503,8 @@ void jeu(){
                         score = 0;
                     }
                     printf("\nVoulez vous rejouer ?\n1 - Oui\n2 - Non\n");
-                    scanf("%d", &choix);
-                }while(choix == 1);
+                    scanf("%d", &choix2);
+                }while(choix2 == 1);
             }
             break;
         default:
