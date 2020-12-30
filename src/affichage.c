@@ -191,22 +191,28 @@ void SDL_Menu(){
 
                                         case SDLK_0:{ //Jeu solo choisi
                                             affichageRendu("assets/difficulte.bmp",fenetre,rendu);
-                                            switch(event.key.keysym.sym){   
-                                                case SDLK_2 :
-                                                    SDL_RenderClear(rendu);
-                                                    SDL_partieSolo(2,fenetre,rendu);
-                                                    break;
-                                                case SDLK_3 :
-                                                    SDL_partieSolo(3,fenetre,rendu);
-                                                    break;
+                                            while(SDL_PollEvent (&event)){
+                                                switch(event.key.keysym.sym){   
+                                                    case SDLK_2 :
+                                                        SDL_RenderClear(rendu);
+                                                        SDL_partieSolo(2,fenetre,rendu);
+                                                        break;
+                                                    case SDLK_3 :
+                                                        SDL_RenderClear(rendu);
+                                                        SDL_partieSolo(3,fenetre,rendu);
+                                                        break;
 
-                                                case SDL_QUIT :
-                                                    stop = true;
-                                                    break;
-                                                
-                                                case SDLK_ESCAPE :
-                                                    stop = true;
-                                            } 
+                                                    case SDL_QUIT :
+                                                        retour=true;
+                                                        stop = true;
+                                                        break;
+                                                    
+                                                    case SDLK_ESCAPE :
+                                                        retour=true;
+                                                        stop = true;
+                                                        break;
+                                                } 
+                                            }
                                             break;
                                         }
                                         case SDLK_2 ://Jeu multi choisi
@@ -215,27 +221,30 @@ void SDL_Menu(){
                                             break;
                                         case SDLK_ESCAPE :
                                             retour=true;
+                                            stop=true;
                                             break;
 
                                         case SDL_QUIT :
                                             retour = true;
+                                            stop = true;
                                             break;
                                     }
                                 }
                             }while(!retour);
                             SDL_RenderClear(rendu);
                             affichageRendu("assets/menujeu.bmp",fenetre,rendu);
-                            bool stop = false;
+                            stop = true;
+                            break;
                         }
-                        break;
-                    }   
-                }
-                break;  
+                    }
+                    break;
+                }  
             }
         }   
-    }
-    while(!stop);
+    }while(!stop);
 }
+
+
 int SDL_partieSolo(int difficulte, SDL_Window *fenetre, SDL_Renderer *rendu){
     int idJoueur = 2;
     if(difficulte == 2){
@@ -245,7 +254,7 @@ int SDL_partieSolo(int difficulte, SDL_Window *fenetre, SDL_Renderer *rendu){
         while(!gagne){
             if(idJoueur == 1){
                 idJoueur++;
-                tourOrdi(difficulte);
+                SDL_tourOrdi(difficulte,fenetre,rendu);
             } else {
                 idJoueur--;
                 SDL_tour(idJoueur,fenetre,rendu);
@@ -269,7 +278,7 @@ int SDL_partieSolo(int difficulte, SDL_Window *fenetre, SDL_Renderer *rendu){
         while(!gagne){
             if(idJoueur == 1){
                 idJoueur++;
-                tourOrdi(difficulte);
+                SDL_tourOrdi(difficulte,fenetre,rendu);
             } else {
                 idJoueur--;
                 SDL_tour(idJoueur,fenetre,rendu);
@@ -399,7 +408,7 @@ void SDL_afficheGrid(SDL_Window *fenetre, SDL_Renderer *rendu){
                                 break;
                                 
                         }
-                            cap2 = cap2->s;
+                        cap2 = cap2->s;
                     }
                     break;
                 }
@@ -541,8 +550,9 @@ void SDL_tour(int id, SDL_Window *fenetre, SDL_Renderer *rendu){
     SDL_afficheGrid(fenetre,rendu);
     SDL_Event event;
     bool stop = false;
+    bool retour = false;
     int capa;
-
+    //cas d'utilisation d'une capacité
     do{
         while (SDL_PollEvent (&event)){
             switch (event.type){
@@ -551,113 +561,141 @@ void SDL_tour(int id, SDL_Window *fenetre, SDL_Renderer *rendu){
                     break;
                 
                 case SDL_KEYDOWN :{
-                    switch(event.key.keysym.sym){
-                        case SDLK_ESCAPE:
-                            stop=true;
-                            break;
-                        case SDLK_o:{
-                            do{
-                                while(SDL_PollEvent (&event)){    
-                                    switch(event.key.keysym.sym){
-                                        case SDLK_1:
-                                            SDL_RenderClear(rendu);
-                                            SDL_afficheGrid(fenetre,rendu);
-                                            SDL_useCapa(1, capa-1,fenetre,rendu);
-                                            break;
-                                
-                                        case SDLK_2:
-                                            SDL_RenderClear(rendu);
-                                            SDL_afficheGrid(fenetre,rendu);
-                                            SDL_useCapa(2, capa-1,fenetre,rendu);
-                                            break;
-                                
-                                        case SDLK_3:
-                                            SDL_RenderClear(rendu);
-                                            SDL_afficheGrid(fenetre,rendu);
-                                            SDL_useCapa(3, capa-1,fenetre,rendu);
+                    retour = false;
+                    do{
+                        while(SDL_PollEvent (&event)){
+                            switch(event.key.keysym.sym){
+                                case SDL_QUIT:{
+                                    retour=true;
+                                    stop=true;
+                                    break;
+                                }
+                                case SDLK_ESCAPE:{
+                                    retour=true;
+                                    stop=true;
+                                    break;
+                                }
+                                            
+                                case SDLK_o:{
+                                    SDL_RenderClear(rendu);
+                                    while(SDL_PollEvent (&event)){
+                                        switch(event.key.keysym.sym){
+                                            case SDLK_1:
+                                                SDL_afficheGrid(fenetre,rendu);
+                                                SDL_useCapa(1, capa-1,fenetre,rendu);
+                                                retour = true;
+                                                break;
+                                                        
+                                            case SDLK_2:
+                                                SDL_afficheGrid(fenetre,rendu);
+                                                SDL_useCapa(2, capa-1,fenetre,rendu);
+                                                retour=true;
+                                                break;
+                                                        
+                                            case SDLK_3:
+                                                SDL_afficheGrid(fenetre,rendu);
+                                                SDL_useCapa(3, capa-1,fenetre,rendu);
+                                                retour=true;
+                                                break;
+                                                        
+                                            case SDLK_4:
+                                                SDL_afficheGrid(fenetre,rendu);
+                                                SDL_useCapa(4, capa-1,fenetre,rendu);
+                                                retour=true;
+                                                break;
+                                                        
+                                            case SDLK_ESCAPE:
+                                                retour=true;
+                                                stop=true;
+                                                break;
 
-                                            break;
-                                
-                                        case SDLK_4:
+                                            case SDL_QUIT:
+                                                retour=true;
+                                                stop=true;
+                                                break;
+                                        }
+                                        break;
+                                    }
+                                }
+
+                                case SDLK_n : {
+                                    retour=true;
+                                    break;
+                                }
+                            }
+                        }
+                    }while(!retour);
+                    retour=false;
+                    //Passage à la gestion classique du tour
+                    do{
+                        while (SDL_PollEvent (&event)){
+                            switch (event.type){
+                                case SDL_QUIT:{
+                                    retour=true;
+                                    stop=true;
+                                    break;
+                                }
+
+                                case SDL_KEYDOWN:{
+                                    switch(event.key.keysym.sym){
+                                        case SDLK_z:
                                             SDL_RenderClear(rendu);
+                                            SDL_avance(id,fenetre,rendu);
                                             SDL_afficheGrid(fenetre,rendu);
-                                            SDL_useCapa(4, capa-1,fenetre,rendu);
+                                            retour=true;
                                             break;
-                                
+                                                
+                                        case SDLK_q:
+                                            SDL_RenderClear(rendu);
+                                            tourne(id, -1);
+                                            SDL_afficheGrid(fenetre,rendu);
+                                            retour=true;
+                                            break;
+
+                                        case SDLK_d:
+                                            SDL_RenderClear(rendu);
+                                            tourne(id,1);
+                                            SDL_afficheGrid(fenetre,rendu);
+                                            retour=true;
+                                            break;
+                                                    
                                         case SDLK_ESCAPE:
+                                            retour=true;
                                             stop=true;
                                             break;
 
                                         case SDL_QUIT:
+                                            retour=true;
                                             stop=true;
                                             break;
+                                                        
                                     }
-                                }
-                            }while(!stop);
-                        }
-                    }   
-                }
-            }
-        }   
-    }while(!stop);
-
-    //Passage à la gestion classique du tour
-        do{
-            while (SDL_PollEvent (&event)){
-                switch (event.type){
-                    case SDL_QUIT:{
-                        stop=true;
-                        break;
-                        do{
-                            while(SDL_PollEvent (&event)){
-                                switch(event.key.keysym.sym){
-                                    case SDLK_z:
-                                        SDL_RenderClear(rendu);
-                                        SDL_avance(id,fenetre,rendu);
-                                        SDL_afficheGrid(fenetre,rendu);
-                                        break;
-                        
-                                    case SDLK_q:
-                                        SDL_RenderClear(rendu);
-                                        tourne(id, -1);
-                                        SDL_afficheGrid(fenetre,rendu);
-                                        break;
-
-                                    case SDLK_d:
-                                        SDL_RenderClear(rendu);
-                                        tourne(id,1);
-                                        SDL_afficheGrid(fenetre,rendu);
-                                        break;
-                            
-                                    case SDLK_ESCAPE:
-                                        stop=true;
-                                        break;
-
-                                    case SDL_QUIT:
-                                        stop=true;
-                                        break;
+                                    break;
                                 }
                             }
-                        }while(!stop);
-                    }
+                        }
+                    }while(!retour);
+                    SDL_RenderClear(rendu);
+                    stop = true;
+                    break;
                 }
-            }
-        }while(!stop);
-
-    time_t tps;
-    srand((unsigned) time(&tps));
-    int nbAlea = rand()%10;
-    //Une chance sur 10 qu'une nouvelle capacité apparaisse sur la carte
-    if(nbAlea == 1){
-        //On crée alors une position pour notre nouvelle capacité
-        int posX = rand()%SIZE;
-        int posY = rand()%SIZE;
-        capacite *capa = (capacite *)malloc(sizeof(capacite));
-        capa->s = NULL;
-        //On génère un type aléatoirement
-        capa->type = rand()%4;
-        t[posX][posY].capa = capa;
-    }  
+            }   
+        }
+        time_t tps;
+        srand((unsigned) time(&tps));
+        int nbAlea = rand()%10;
+        //Une chance sur 10 qu'une nouvelle capacité apparaisse sur la carte
+        if(nbAlea == 1){
+            //On crée alors une position pour notre nouvelle capacité
+            int posX = rand()%SIZE;
+            int posY = rand()%SIZE;
+            capacite *capa = (capacite *)malloc(sizeof(capacite));
+            capa->s = NULL;
+            //On génère un type aléatoirement
+            capa->type = rand()%4;
+            t[posX][posY].capa = capa;
+        }  
+    }while(!stop);
 }
 
 int SDL_partie(SDL_Window *fenetre, SDL_Renderer *rendu){
@@ -986,6 +1024,366 @@ void SDL_useCapa(int id, int n, SDL_Window *fenetre, SDL_Renderer *rendu){
                 }
                 break;
             }
+        }
+    }
+}
+
+void SDL_tourOrdi(int difficulte,SDL_Window *fenetre, SDL_Renderer *rendu){
+    //On considère que l'id de l'ordinateur doit être 2.
+        int probCapa,mouv;
+
+        mouv = meilleurMouv();
+
+        if(mouv != 0){
+            switch(difficulte){
+                case 2:
+                    {
+                        //L'ordinateur a une chance sur 3 d'utiliser une capacité.
+                        probCapa = rand()%3;
+                        if(probCapa == 1){
+                            //La capacité à utiliser est défini de manière pseudo-aléatoire.
+                            int capa = alea(1,4);
+                            SDL_useCapaOrdi(difficulte,capa-1,fenetre,rendu);
+                        }
+                        //66% de chances de réaliser le meilleur mouvement
+                        int doMouv = rand()%3;
+                        if(doMouv == 0 || doMouv == 1){
+                            switch(mouv){
+                                case 1:
+                                    {
+                                        SDL_avance(2,fenetre,rendu);
+                                    }
+                                    break;
+                                case 2:
+                                    {
+                                        SDL_avance(2,fenetre,rendu);
+                                    }
+                                    break;
+                                case 3:
+                                    {
+                                        /*
+                                        * 0: tourner à gauche
+                                        * 1: tourner à doite
+                                        */
+                                        int tourner = alea(0,1);
+                                        if(tourner == 0){
+                                            tourne(2,-1);
+                                        } else {
+                                            tourne(2,1);
+                                        }
+                                        break;
+                                    }
+
+                            }
+                        }else{
+                            //L'ordinateur a une chance sur 3 d'utiliser une capacité.
+                            probCapa = rand()%3;
+                            if(probCapa == 1){
+                                //La capacité à utiliser est défini de manière pseudo-aléatoire.
+                                int capa = alea(1,4);
+                                SDL_useCapaOrdi(difficulte,capa-1,fenetre,rendu);
+                            }
+                            //On définit le mouvement à réaliser, 75% de chances d'avancer et 25% de chances de tourner.
+                            mouv = rand()%4;
+                            if(mouv >= 0 && mouv <= 2){
+                                SDL_avance(2,fenetre,rendu);
+                            } else {
+                                /*
+                                * 0: tourner à gauche
+                                * 1: tourner à doite
+                                */
+                                int tourner = alea(0,1);
+                                if(tourner == 0){
+                                    tourne(2,-1);
+                                } else {
+                                    tourne(2,1);
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 3:
+                    {
+                        //L'ordinateur a une chance sur 3 d'utiliser une capacité.
+                        probCapa = rand()%2;
+                        if(probCapa == 1){
+                            //La capacité à utiliser est défini de manière pseudo-aléatoire.
+                            int capa = alea(1,4);
+                            SDL_useCapaOrdi(difficulte,capa-1,fenetre,rendu);
+                        }
+                        //90% de chances de réaliser le meilleur mouvement
+                        int doMouv = rand()%10;
+                        if(doMouv >= 0 && doMouv <=8){
+                            switch(mouv){
+                                case 1:
+                                    {
+                                        SDL_avance(2,fenetre,rendu);
+                                    }
+                                    break;
+                                case 2:
+                                    {
+                                        SDL_avance(2,fenetre,rendu);
+                                    }
+                                    break;
+                                case 3:
+                                    {
+                                        /*
+                                        * 0: tourner à gauche
+                                        * 1: tourner à doite
+                                        */
+                                        int tourner = alea(0,1);
+                                        if(tourner == 0){
+                                            tourne(2,-1);
+                                        } else {
+                                            tourne(2,1);
+                                        }
+                                        break;
+                                    }
+
+                            }
+                        }else{
+                            //L'ordinateur a une chance sur 2 d'utiliser une capacité.
+                            probCapa = rand()%2;
+                            if(probCapa == 1){
+                                //La capacité à utiliser est défini de manière pseudo-aléatoire.
+                                int capa = alea(1,4);
+                                SDL_useCapaOrdi(difficulte,capa-1,fenetre,rendu);
+                            }
+                            //On définit le mouvement à réaliser, 75% de chances d'avancer et 25% de chances de tourner.
+                            mouv = rand()%4;
+                            if(mouv >= 0 && mouv <= 2){
+                                SDL_avance(2,fenetre,rendu);
+                            } else {
+                                /*
+                                * 0: tourner à gauche
+                                * 1: tourner à doite
+                                */
+                                int tourner = alea(0,1);
+                                if(tourner == 0){
+                                    tourne(2,-1);
+                                } else {
+                                    tourne(2,1);
+                                }
+                            }
+                        }
+                    }
+                    break;
+            }
+        } else {
+            //L'ordinateur a une chance sur 3 d'utiliser une capacité.
+            probCapa = rand()%3;
+            if(probCapa == 1){
+                //La capacité à utiliser est défini de manière pseudo-aléatoire.
+                int capa = alea(1,4);
+                SDL_useCapaOrdi(difficulte,capa-1,fenetre,rendu);
+            }
+            //On définit le mouvement à réaliser, 75% de chances d'avancer et 25% de chances de tourner.
+            mouv = rand()%4;
+            if(mouv >= 0 && mouv <= 1){
+                SDL_avance(2,fenetre,rendu);
+            } else {
+                /*
+                * 0: tourner à gauche
+                * 1: tourner à doite
+                */
+                int tourner = alea(0,1);
+                if(tourner == 0){
+                    tourne(2,-1);
+                } else {
+                    tourne(2,1);
+                }
+            }
+        }
+
+        time_t tps;
+        srand((unsigned) time(&tps));
+        int nbAlea = rand()%10;
+        //Une chance sur 10 qu'une nouvelle capacité apparaisse sur la carte
+        if(nbAlea == 1){
+        //On crée alors une position pour notre nouvelle capacité
+        int posX = rand()%SIZE;
+        int posY = rand()%SIZE;
+        capacite *capa = (capacite *)malloc(sizeof(capacite));
+        capa->s = NULL;
+        //On génère un type aléatoirement
+        capa->type = rand()%4;
+        t[posX][posY].capa = capa;
+        }
+}
+
+void SDL_useCapaOrdi(int difficulte,int n,SDL_Window *fenetre,SDL_Renderer *rendu){
+    bool possible = false;
+    switch(n){
+        case 0: //Création d'un mur
+        {
+                for(int i = 0;i<SIZE;i++){
+                    for(int j = 0;j<SIZE;j++){
+                        if(t[j][i].joueurPresent){
+                            if(t[j][i].joueur.id == 2){
+                                capacite *c = (capacite *)malloc(sizeof(capacite));
+                                c = t[j][i].joueur.capacite.p;
+                                capacite *prec = (capacite *)malloc(sizeof(capacite));
+                                prec = t[j][i].joueur.capacite.p;
+                                while(c != NULL){
+                                    if(c->type == n){
+                                        possible = true;
+                                        if(prec == c){
+                                            t[j][i].joueur.capacite.p = c->s;
+                                        }
+                                        prec->s = c->s;
+                                        free(c);
+                                        break;
+                                    }
+                                    prec = c;
+                                    c = c->s;
+                                }
+                            }
+                        }
+                    }
+                }
+                if(possible){
+                    int posX,posY,orientation;
+                    posX = alea(0,5);
+                    posY = alea(0,5);
+                    orientation = alea(0,3);
+                    switch(orientation){
+                        case 0: //Nord
+                            {
+                                t[posX][posY].murNord = true;
+                                t[posX][posY-1].murSud = true;
+                            }
+                            break;
+                        case 1: //Est
+                            {
+                                t[posX][posY].murEst = true;
+                                t[posX+1][posY].murOuest = true;
+                            }
+                            break;
+                        case 2: //Sud
+                            {
+                                t[posX][posY].murSud = true;
+                                t[posX][posY+1].murNord = true;
+                            }
+                            break;
+                        case 3: //Ouest
+                            {
+                                t[posX][posY].murOuest = true;
+                                t[posX-1][posY].murEst = true;
+                            }
+                            break;
+                    }
+                }
+                break;
+        }
+        case 1: //Faire reculer l'adversaire
+        {
+                for(int i=0;i<SIZE;i++){
+                    for(int j = 0;j<SIZE;j++){
+                        if(t[j][i].joueurPresent){
+                            if(t[j][i].joueur.id == 2){
+                                capacite *c = (capacite *)malloc(sizeof(capacite));
+                                c = t[j][i].joueur.capacite.p;
+                                capacite *prec = (capacite *)malloc(sizeof(capacite));
+                                prec = t[j][i].joueur.capacite.p;
+                                while(c != NULL){
+                                    if(c->type == n){
+                                        possible = true;
+                                        if(prec == c){
+                                            t[j][i].joueur.capacite.p = c->s;
+                                        }
+                                        prec->s = c->s;
+                                        free(c);
+                                        break;
+                                    }
+                                    prec = c;
+                                    c = c->s;
+                                }
+                            }
+                        }
+                    }
+                }
+            if(possible){
+                for(int i = 0;i<SIZE;i++){
+                    for(int j = 0;j<SIZE;j++){
+                        if(t[j][i].joueur.id == 1){
+                            tourne(1,-1);
+                            tourne(1,-1);
+                            SDL_avance(1,fenetre,rendu);
+                            tourne(1,-1);
+                            tourne(1,-1);
+                            i = SIZE;
+                            j = SIZE;
+                            break;
+                        }
+                    }
+                }
+            }
+            break;
+        }    
+        case 2: //Demi-tour
+        {
+                for(int i = 0;i<SIZE;i++){
+                    for(int j =0;j<SIZE;j++){
+                        if(t[j][i].joueurPresent){
+                            if(t[j][i].joueur.id == 2){
+                                capacite *c = (capacite *)malloc(sizeof(capacite));
+                                c = t[j][i].joueur.capacite.p;
+                                capacite *prec = (capacite *)malloc(sizeof(capacite));
+                                prec = t[j][i].joueur.capacite.p;
+                                //On parcourt les capacités jusqu'au bout
+                                while(c != NULL){
+                                    //Si le joueur a la capacité, on execute l'action
+                                    if(c->type == n){
+                                        tourne(2, 1);
+                                        tourne(2, 1);
+                                        possible = true;
+                                        if(prec == c){
+                                            t[j][i].joueur.capacite.p = c->s; 
+                                        }
+                                        prec->s = c->s;
+                                        free(c);
+                                        break;
+                                    }
+                                    prec = c;
+                                    c = c->s;
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+        }
+        case 3: //Rejouer un tour
+        {
+                for(int i = 0;i<SIZE;i++){
+                    for(int j = 0;j<SIZE;j++){
+                        if(t[j][i].joueurPresent){
+                            if(t[j][i].joueur.id == 2){
+                                capacite *c = (capacite *)malloc(sizeof(capacite));
+                                c = t[j][i].joueur.capacite.p;
+                                capacite *prec = (capacite *)malloc(sizeof(capacite));
+                                prec = t[j][i].joueur.capacite.p;
+                                while(c != NULL){
+                                    if(c->type == n){
+                                        possible = true;
+                                        if(prec == c){
+                                            t[j][i].joueur.capacite.p = c->s;
+                                        }
+                                        prec->s = c->s;
+                                        free(c);
+                                        break;
+                                    }
+                                    prec = c;
+                                    c = c->s;
+                                }
+                            }
+                        }
+                    }
+                }
+                if(possible){
+                    SDL_tourOrdi(difficulte,fenetre,rendu);
+                }
+                break;
         }
     }
 }

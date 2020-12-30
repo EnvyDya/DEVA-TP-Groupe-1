@@ -35,7 +35,11 @@
 
     void SDL_tour(int id, SDL_Window *fenetre, SDL_Renderer *rendu);
 
+    void SDL_tourOrdi(int difficulte,SDL_Window *fenetre, SDL_Renderer *rendu);
+
     void SDL_useCapa(int id, int n, SDL_Window *fenetre, SDL_Renderer *rendu);
+
+    void SDL_useCapaOrdi(int difficulte,int n,SDL_Window *fenetre, SDL_Renderer *rendu);
     //Cette fonction permet d'afficher le menu du jeu
     void SDL_Menu();
 #endif
