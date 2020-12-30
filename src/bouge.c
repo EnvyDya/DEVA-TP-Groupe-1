@@ -83,29 +83,25 @@ void initTabMurs(){
 
     for(int i = 1;i<SIZE-1;i++){
         for(int j = 1;j<SIZE-1;j++){
+            //1 chance sur 4 qu'un mur apparaisse sur une case
             int probaMur = rand()%4;
 
             if(probaMur == 0){
+                //On place un mur au nord de la case et donc un mur au sud de la case au dessus
                 t[i][j].murNord = true;
+                t[i][j-1].murSud = true;
             } else if(probaMur == 1){
+                //On place un mur à l'est de la case et donc un mur à l'ouest de la case à droite
                 t[i][j].murEst = true;
+                t[i+1][j].murOuest = true;
             } else if(probaMur == 2){
+                //On place un mur au sud de la case et donc un mur au nord de la case en dessous
                 t[i][j].murSud = true;
+                t[i][j+1].murNord = true;
             } else if(probaMur == 3){
+                //On place un mur à l'ouest de la case et donc un mur à l'est de la case à gauche
                 t[i][j].murOuest = true;
-            }
-
-            if(t[i][j].murNord){
-                t[i-1][j].murSud = true;
-            }
-            if(t[i][j].murEst){
-                t[i][j+1].murOuest = true;
-            }
-            if(t[i][j].murSud){
-                t[i+1][j].murNord = true;
-            }
-            if(t[i][j].murOuest){
-                t[i][j-1].murEst = true;
+                t[i-1][j].murEst = true;
             }
         }
     }
@@ -113,12 +109,15 @@ void initTabMurs(){
     //Placement des joueurs sur la carte
     t[0][SIZE-1].joueur = j1;
     t[0][SIZE-1].joueurPresent = true;
+    //On empêche des murs de se créer autour du joueur 1.
     t[0][SIZE-1].murNord = false;
     t[0][SIZE-1].murEst = false;
     t[0][SIZE-2].murSud = false;
     t[1][SIZE-1].murOuest = false;
+
     t[SIZE-1][0].joueur = j2;
     t[SIZE-1][0].joueurPresent = true;
+    //On empêche des murs de se créer autour du joueur 2.
     t[SIZE-1][0].murSud = false;
     t[SIZE-1][0].murOuest = false;
     t[SIZE-1][1].murNord = false;
@@ -652,7 +651,7 @@ void useCapaOrdi(int difficulte,int n){
                             break;
                     }
                 } else {
-                    printf("La capacité du bot a échoué\n");
+                    printf("La capacite du bot a echoue\n");
                 }
                 break;
         }
@@ -699,7 +698,7 @@ void useCapaOrdi(int difficulte,int n){
                     }
                 }
             } else {
-                printf("La capacité du bot a échoué\n");
+                printf("La capacite du bot a echoue\n");
             }
             break;
         }    
@@ -735,7 +734,7 @@ void useCapaOrdi(int difficulte,int n){
                     }
                 }
                 if(!possible){
-                    printf("La capacité du bot a échoué\n");
+                    printf("La capacite du bot a echoue\n");
                 }
                 break;
         }
@@ -769,7 +768,7 @@ void useCapaOrdi(int difficulte,int n){
                 if(possible){
                     tourOrdi(difficulte);
                 } else {
-                    printf("La capacité du bot a échoué\n");
+                    printf("La capacite du bot a echoue\n");
                 }
                 break;
         }
