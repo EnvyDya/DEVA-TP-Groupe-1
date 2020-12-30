@@ -588,10 +588,9 @@ void SDL_tour(int id, SDL_Window *fenetre, SDL_Renderer *rendu){
                                             stop=true;
                                             break;
 
-                                        case SDL_Quit:
+                                        case SDL_QUIT:
                                             stop=true;
                                             break;
-                                        }
                                     }
                                 }
                             }while(!stop);
@@ -599,8 +598,8 @@ void SDL_tour(int id, SDL_Window *fenetre, SDL_Renderer *rendu){
                     }   
                 }
             }
-        
-        }while(!stop);
+        }   
+    }while(!stop);
 
     //Passage à la gestion classique du tour
         do{
@@ -634,7 +633,7 @@ void SDL_tour(int id, SDL_Window *fenetre, SDL_Renderer *rendu){
                                         stop=true;
                                         break;
 
-                                    case SDL_Quit:
+                                    case SDL_QUIT:
                                         stop=true;
                                         break;
                                 }
@@ -642,7 +641,8 @@ void SDL_tour(int id, SDL_Window *fenetre, SDL_Renderer *rendu){
                         }while(!stop);
                     }
                 }
-            }while(!stop);
+            }
+        }while(!stop);
 
     time_t tps;
     srand((unsigned) time(&tps));
